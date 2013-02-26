@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>$C.java</title>
+  <link href="http://circumflex.ru/css/docco.css"
+        rel="stylesheet"
+        type="text/css"
+        media="screen, projection"/>
+  <script type="text/javascript" src="http://circumflex.ru/js/highlight.pack.js">
+  </script>
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+</head>
+<body>
+<div id="container">
+  <table cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+      <th class="docs">
+        <h1><a href="../../../../../../index.html" title="Back to index">&larr;</a>&nbsp;&nbsp;$C.java</h1>
+      </th>
+      <th class="code"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="section-0">
+      <td class="docs">
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-0">#</a>
+        </div>
+      
+      </td>
+      <td class="code">
+        <pre class="scala"><code>package org.underscore.wrappers;
+
+import org.underscore.functors.*;
+
+import java.util.*;</code></pre>
+      </td>
+    </tr>
+    <tr id="section-1">
+      <td class="docs">
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-1">#</a>
+        </div>
+      <p>User: alexogar
+  Date: 2/24/13
+  Time: 1:25 PM
+ 
+</p>
+      </td>
+      <td class="code">
+        <pre class="scala"><code>public class $C&lt;T&gt; {
+
+    private final Collection&lt;T&gt; internal;
+
+    public $C() {
+        internal = new ArrayList&lt;&gt;();
+    }
+
+    public $C(T[] arr) {
+        if (arr == null) {
+            internal = new ArrayList&lt;&gt;();
+            return;
+        }
+        internal = new ArrayList&lt;&gt;(Arrays.asList(arr));
+    }
+
+    public $C(Collection&lt;T&gt; it) {
+        if (it == null) {
+            internal = new ArrayList&lt;&gt;();
+            return;
+        }
+        internal = it;
+    }
+
+    public $C&lt;T&gt; each(EachVisitor&lt;T&gt; visitor) {
+        for (T e : internal) visitor.visit(e);
+        return this;
+    }
+
+    public $C&lt;T&gt; each(EachPairVisitor&lt;T, Integer&gt; visitor) {
+        int i = 0;
+        for (T t : internal) {
+            visitor.visit(t, i);
+            i++;
+        }
+        return this;
+    }
+
+    public &lt;E&gt; $C&lt;E&gt; map(TransformVisitor&lt;T,E&gt; visitor){
+        List&lt;E&gt; list = new ArrayList&lt;&gt;();
+        each((T f)-&gt;{list.add(visitor.visit(f));});
+        return new $C&lt;&gt;(list);
+    }
+
+    public T reduce(ReducePairVisitor&lt;T&gt; visitor){
+        T result = null;
+        T[] objects = array();
+        T t0 = objects[0];
+        for (int i = 1; i &lt; objects.length; i++) {
+            T t = objects[i];
+            if(result == null) {
+                result = visitor.visit(t, t0);
+            } else {
+                result = visitor.visit(t, result);
+            }
+        }
+        return result;
+    }
+
+
+    public T[] array() {
+        return (T[]) internal.toArray();
+    }
+}</code></pre>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

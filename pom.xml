@@ -8,6 +8,11 @@
     <artifactId>underscore.java</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <docco.filenameRegex>.*java$</docco.filenameRegex>
+        <docco.useScaladoc>true</docco.useScaladoc>
+        <docco.outputPath>docs</docco.outputPath>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -35,6 +40,20 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>ru.circumflex</groupId>
+                <artifactId>maven-cx-plugin</artifactId>
+                <version>2.5</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-nop</artifactId>
+                        <version>1.7.2</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
         </plugins>
     </build>
 

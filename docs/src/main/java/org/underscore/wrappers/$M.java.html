@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>$M.java</title>
+  <link href="http://circumflex.ru/css/docco.css"
+        rel="stylesheet"
+        type="text/css"
+        media="screen, projection"/>
+  <script type="text/javascript" src="http://circumflex.ru/js/highlight.pack.js">
+  </script>
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+</head>
+<body>
+<div id="container">
+  <table cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+      <th class="docs">
+        <h1><a href="../../../../../../index.html" title="Back to index">&larr;</a>&nbsp;&nbsp;$M.java</h1>
+      </th>
+      <th class="code"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="section-0">
+      <td class="docs">
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-0">#</a>
+        </div>
+      
+      </td>
+      <td class="code">
+        <pre class="scala"><code>package org.underscore.wrappers;
+
+import org.underscore.functors.EachPairVisitor;
+import org.underscore.functors.EachVisitor;
+import org.underscore.functors.TransformPairVisitor;
+import org.underscore.functors.TransformVisitor;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;</code></pre>
+      </td>
+    </tr>
+    <tr id="section-1">
+      <td class="docs">
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-1">#</a>
+        </div>
+      <p>User: alexogar
+  Date: 2/25/13
+  Time: 10:14 AM
+ 
+</p>
+      </td>
+      <td class="code">
+        <pre class="scala"><code>public class $M&lt;K, V&gt; {
+    private final Map&lt;K, V&gt; internal;
+
+    public $M() {
+        internal = new HashMap&lt;&gt;();
+    }
+
+    public $M(Map&lt;K, V&gt; map) {
+        this.internal = map;
+    }
+
+    public $M&lt;K, V&gt; each(EachPairVisitor&lt;K, V&gt; visitor) {
+        for (Map.Entry&lt;K, V&gt; entry : internal.entrySet()) {
+            visitor.visit(entry.getKey(), entry.getValue());
+        }
+        return this;
+    }
+
+    public $M&lt;K, V&gt; each(EachVisitor&lt;Map.Entry&lt;K, V&gt;&gt; visitor) {
+        for (Map.Entry&lt;K, V&gt; entry : internal.entrySet()) {
+            visitor.visit(entry);
+        }
+        return this;
+    }
+
+    public &lt;T&gt; $M&lt;K, T&gt; map(TransformVisitor&lt;Map.Entry&lt;K, V&gt;, T&gt; visitor) {
+        Map&lt;K, T&gt; map = new HashMap&lt;&gt;();
+        each((Map.Entry&lt;K, V&gt; entry) -&gt; {
+            map.put(entry.getKey(), visitor.visit(entry));
+        });
+        return new $M&lt;&gt;(map);
+    }
+
+    public &lt;T&gt; $M&lt;K, T&gt; map(TransformPairVisitor&lt;K, V, T&gt; visitor) {
+        Map&lt;K, T&gt; map = new HashMap&lt;&gt;();
+        each((K k, V v) -&gt; {
+            map.put(k, visitor.visit(k, v));
+        });
+        return new $M&lt;&gt;(map);
+    }
+
+    public $C&lt;K&gt; keys() {
+        return new $C&lt;&gt;(internal.keySet());
+    }
+
+    public $C&lt;V&gt; values() {
+        return new $C&lt;&gt;(internal.values());
+    }
+}</code></pre>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
