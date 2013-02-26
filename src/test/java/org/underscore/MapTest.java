@@ -8,8 +8,6 @@ import org.underscore.wrappers.$M;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.underscore.$.$$;
-
 /**
  * User: alexogar
  * Date: 2/25/13
@@ -47,7 +45,7 @@ public class MapTest {
         $C<Integer> result = $.map(new Integer[]{1, 2, 3}, (Integer i) -> i * 2);
         Assert.assertArrayEquals(new Integer[]{2, 4, 6}, result.array());
 
-        $C<Integer> result2 = $$(new Integer[]{1, 2, 3}).map((Integer i) -> i * 2);
+        $C<Integer> result2 = $.$(new Integer[]{1, 2, 3}).map((Integer i) -> i * 2);
         Assert.assertArrayEquals(new Integer[]{2, 4, 6}, result2.array());
 
 
@@ -55,8 +53,8 @@ public class MapTest {
             put(1, 1);
             put(2, 2);
             put(3, 3);
-        }}, (Map.Entry<Integer,Integer> entry) -> "test");
+        }}, (Map.Entry<Integer, Integer> entry) -> "test");
 
-        Assert.assertArrayEquals(new String[]{"test","test","test"},result3.values().array());
+        Assert.assertArrayEquals(new String[]{"test", "test", "test"}, result3.values().array());
     }
 }
