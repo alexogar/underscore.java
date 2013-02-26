@@ -1,8 +1,6 @@
 package org.underscore.wrappers;
 
-import org.underscore.functors.EachPairVisitor;
-import org.underscore.functors.EachVisitor;
-import org.underscore.functors.TransformVisitor;
+import org.underscore.functors.*;
 
 import java.util.*;
 
@@ -54,6 +52,22 @@ public class $C<T> {
         each((T f)->{list.add(visitor.visit(f));});
         return new $C<>(list);
     }
+
+    public T reduce(ReducePairVisitor<T> visitor){
+        T result = null;
+        T[] objects = array();
+        T t0 = objects[0];
+        for (int i = 1; i < objects.length; i++) {
+            T t = objects[i];
+            if(result == null) {
+                result = visitor.visit(t, t0);
+            } else {
+                result = visitor.visit(t, result);
+            }
+        }
+        return result;
+    }
+
 
     public T[] array() {
         return (T[]) internal.toArray();

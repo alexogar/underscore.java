@@ -1,9 +1,6 @@
 package org.underscore;
 
-import org.underscore.functors.TransformPairVisitor;
-import org.underscore.functors.TransformVisitor;
-import org.underscore.functors.EachPairVisitor;
-import org.underscore.functors.EachVisitor;
+import org.underscore.functors.*;
 import org.underscore.wrappers.$C;
 import org.underscore.wrappers.$M;
 
@@ -67,4 +64,9 @@ public final class $ {
     public static <K,F,T> $M<K,T> map(Map<K, F> map, TransformPairVisitor<K,F,T> visitor) {
         return $$(map).map(visitor);
     }
+
+    public static <K> K reduce(K[] it, ReducePairVisitor<K> visitor) {
+        return $$(it).reduce(visitor);
+    }
+
 }
