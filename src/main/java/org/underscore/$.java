@@ -65,8 +65,8 @@ public final class $ {
         return $(map).map(visitor);
     }
 
-    public static <K> K reduce(K[] it, ReducePairVisitor<K> visitor) {
-        return $(it).reduce(visitor);
+    public static <K,MEMO> MEMO reduce(K[] it, MEMO memo, ReducePairVisitor<MEMO,K> visitor) {
+        return $(it).reduce(memo,visitor);
     }
 
 }

@@ -53,19 +53,13 @@ public class $C<T> {
         return new $C<>(list);
     }
 
-    public T reduce(ReducePairVisitor<T> visitor){
-        T result = null;
-        T[] objects = array();
-        T t0 = objects[0];
-        for (int i = 1; i < objects.length; i++) {
-            T t = objects[i];
-            if(result == null) {
-                result = visitor.visit(t, t0);
-            } else {
-                result = visitor.visit(t, result);
-            }
-        }
-        return result;
+    public <MEMO> MEMO reduce(MEMO memo, ReducePairVisitor<MEMO,T> visitor){
+        $O<MEMO> work = new $O(memo);
+        each((T t)->{
+            work.set(visitor.visit(work.get(),t));
+        });
+
+        return work.get();
     }
 
     public T[] array() {
