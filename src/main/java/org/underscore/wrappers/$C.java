@@ -68,7 +68,6 @@ public class $C<T> {
         return result;
     }
 
-
     public T[] array() {
         return (T[]) internal.toArray();
     }

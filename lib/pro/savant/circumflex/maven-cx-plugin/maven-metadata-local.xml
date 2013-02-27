@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>pro.savant.circumflex</groupId>
+  <artifactId>maven-cx-plugin</artifactId>
+  <versioning>
+    <latest>3.0-SNAPSHOT</latest>
+    <versions>
+      <version>3.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20130227070546</lastUpdated>
+  </versioning>
+</metadata>

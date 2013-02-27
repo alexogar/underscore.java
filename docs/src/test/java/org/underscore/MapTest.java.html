@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8">
-  <title>MapTest.java</title>
-  <link href="http://circumflex.ru/css/docco.css"
-        rel="stylesheet"
-        type="text/css"
-        media="screen, projection"/>
-  <script type="text/javascript" src="http://circumflex.ru/js/highlight.pack.js">
-  </script>
-  <script type="text/javascript">
-    hljs.initHighlightingOnLoad();
-  </script>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>MapTest.java</title>
+    <link href="http://circumflex.ru/css/docco.css"
+          rel="stylesheet"
+          type="text/css"
+          media="screen, projection"/>
+    <script type="text/javascript" src="http://circumflex.ru/js/highlight.pack.js">
+    </script>
+    <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
+    </script>
 </head>
 <body>
 <div id="container">
-  <table cellspacing="0" cellpadding="0">
-    <thead>
-    <tr>
-      <th class="docs">
-        <h1><a href="../../../../../index.html" title="Back to index">&larr;</a>&nbsp;&nbsp;MapTest.java</h1>
-      </th>
-      <th class="code"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr id="section-0">
-      <td class="docs">
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-0">#</a>
-        </div>
-      
-      </td>
-      <td class="code">
-        <pre class="scala"><code>package org.underscore;
+    <table cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th class="docs">
+                <h1><a href="../../../../../index.html" title="Back to index">&larr;</a>&nbsp;&nbsp;MapTest.java</h1>
+            </th>
+            <th class="code"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr id="section-0">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-0">#</a>
+                </div>
+            
+            </td>
+            <td class="code">
+                <pre class="java"><code>package org.underscore;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,24 +41,22 @@ import org.underscore.wrappers.$C;
 import org.underscore.wrappers.$M;
 
 import java.util.HashMap;
-import java.util.Map;
-
-import static org.underscore.$.$$;</code></pre>
-      </td>
-    </tr>
-    <tr id="section-1">
-      <td class="docs">
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-1">#</a>
-        </div>
-      <p>User: alexogar
+import java.util.Map;</code></pre>
+            </td>
+        </tr>
+        <tr id="section-1">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-1">#</a>
+                </div>
+            <p>User: alexogar
   Date: 2/25/13
   Time: 10:40 AM
  
 </p>
-      </td>
-      <td class="code">
-        <pre class="scala"><code>/*var doubled = $$.map([1, 2, 3], function(num){ return num * 2; });
+            </td>
+            <td class="code">
+                <pre class="java"><code>/*var doubled = $$.map([1, 2, 3], function(num){ return num * 2; });
 equal(doubled.join(', '), '2, 4, 6', 'doubled numbers');
 
 doubled = $$.collect([1, 2, 3], function(num){ return num * 2; });
@@ -88,7 +86,7 @@ public class MapTest {
         $C&lt;Integer&gt; result = $.map(new Integer[]{1, 2, 3}, (Integer i) -&gt; i * 2);
         Assert.assertArrayEquals(new Integer[]{2, 4, 6}, result.array());
 
-        $C&lt;Integer&gt; result2 = $$(new Integer[]{1, 2, 3}).map((Integer i) -&gt; i * 2);
+        $C&lt;Integer&gt; result2 = $.$(new Integer[]{1, 2, 3}).map((Integer i) -&gt; i * 2);
         Assert.assertArrayEquals(new Integer[]{2, 4, 6}, result2.array());
 
 
@@ -96,14 +94,14 @@ public class MapTest {
             put(1, 1);
             put(2, 2);
             put(3, 3);
-        }}, (Map.Entry&lt;Integer,Integer&gt; entry) -&gt; &quot;test&quot;);
+        }}, (Map.Entry&lt;Integer, Integer&gt; entry) -&gt; &quot;test&quot;);
 
-        Assert.assertArrayEquals(new String[]{&quot;test&quot;,&quot;test&quot;,&quot;test&quot;},result3.values().array());
+        Assert.assertArrayEquals(new String[]{&quot;test&quot;, &quot;test&quot;, &quot;test&quot;}, result3.values().array());
     }
 }</code></pre>
-      </td>
-    </tr>
-  </table>
+            </td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

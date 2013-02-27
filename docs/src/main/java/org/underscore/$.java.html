@@ -1,121 +1,121 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8">
-  <title>$.java</title>
-  <link href="http://circumflex.ru/css/docco.css"
-        rel="stylesheet"
-        type="text/css"
-        media="screen, projection"/>
-  <script type="text/javascript" src="http://circumflex.ru/js/highlight.pack.js">
-  </script>
-  <script type="text/javascript">
-    hljs.initHighlightingOnLoad();
-  </script>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>$.java</title>
+    <link href="http://circumflex.ru/css/docco.css"
+          rel="stylesheet"
+          type="text/css"
+          media="screen, projection"/>
+    <script type="text/javascript" src="http://circumflex.ru/js/highlight.pack.js">
+    </script>
+    <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
+    </script>
 </head>
 <body>
 <div id="container">
-  <table cellspacing="0" cellpadding="0">
-    <thead>
-    <tr>
-      <th class="docs">
-        <h1><a href="../../../../../index.html" title="Back to index">&larr;</a>&nbsp;&nbsp;$.java</h1>
-      </th>
-      <th class="code"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr id="section-0">
-      <td class="docs">
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-0">#</a>
-        </div>
-      
-      </td>
-      <td class="code">
-        <pre class="scala"><code>package org.underscore;
+    <table cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th class="docs">
+                <h1><a href="../../../../../index.html" title="Back to index">&larr;</a>&nbsp;&nbsp;$.java</h1>
+            </th>
+            <th class="code"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr id="section-0">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-0">#</a>
+                </div>
+            
+            </td>
+            <td class="code">
+                <pre class="java"><code>package org.underscore;
 
 import org.underscore.functors.*;
 import org.underscore.wrappers.$C;
 import org.underscore.wrappers.$M;
 
 import java.util.*;</code></pre>
-      </td>
-    </tr>
-    <tr id="section-1">
-      <td class="docs">
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-1">#</a>
-        </div>
-      <p>User: alexogar
+            </td>
+        </tr>
+        <tr id="section-1">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-1">#</a>
+                </div>
+            <p>User: alexogar
   Date: 2/23/13
   Time: 9:22 PM
  
 </p>
-      </td>
-      <td class="code">
-        <pre class="scala"><code>public final class $ {
+            </td>
+            <td class="code">
+                <pre class="java"><code>public final class $ {
 
-    public static &lt;E&gt; $C&lt;E&gt; $$(Collection&lt;E&gt; it) {
+    public static &lt;E&gt; $C&lt;E&gt; $(Collection&lt;E&gt; it) {
         return new $C&lt;&gt;(it);
     }
 
-    public static &lt;E&gt; $C&lt;E&gt; $$(E[] it) {
+    public static &lt;E&gt; $C&lt;E&gt; $(E[] it) {
         return new $C&lt;&gt;(it);
     }
 
-    public static &lt;K,V&gt; $M&lt;K,V&gt; $$(Map&lt;K,V&gt; map) {
+    public static &lt;K,V&gt; $M&lt;K,V&gt; $(Map&lt;K, V&gt; map) {
         return new $M&lt;&gt;(map);
     }
 
     public static &lt;E&gt; $C&lt;E&gt; each(E[] it, EachVisitor&lt;E&gt; visitor) {
-        return $$(it).each(visitor);
+        return $(it).each(visitor);
     }
 
     public static &lt;E&gt; $C&lt;E&gt; each(Collection&lt;E&gt; it, EachVisitor&lt;E&gt; visitor) {
-        return $$(it).each(visitor);
+        return $(it).each(visitor);
     }
 
     public static &lt;E&gt; $C&lt;E&gt; each(E[] it, EachPairVisitor&lt;E, Integer&gt; visitor) {
-        return $$(it).each(visitor);
+        return $(it).each(visitor);
     }
 
     public static &lt;E&gt; $C&lt;E&gt; each(Collection&lt;E&gt; it, EachPairVisitor&lt;E, Integer&gt; visitor) {
-        return $$(it).each(visitor);
+        return $(it).each(visitor);
     }
 
     public static &lt;K, V&gt; $M&lt;K,V&gt; each(Map&lt;K, V&gt; map, EachPairVisitor&lt;K, V&gt; visitor) {
-        return $$(map).each(visitor);
+        return $(map).each(visitor);
     }
 
     public static &lt;K, V&gt; $M&lt;K,V&gt; each(Map&lt;K, V&gt; map, EachVisitor&lt;Map.Entry&lt;K, V&gt;&gt; visitor) {
-        return $$(map).each(visitor);
+        return $(map).each(visitor);
     }
 
     public static &lt;F,T&gt; $C&lt;T&gt; map(Collection&lt;F&gt; it, TransformVisitor&lt;F,T&gt; visitor){
-        return $$(it).map(visitor);
+        return $(it).map(visitor);
     }
 
     public static &lt;F,T&gt; $C&lt;T&gt; map(F[] it, TransformVisitor&lt;F,T&gt; visitor) {
-        return $$(it).map(visitor);
+        return $(it).map(visitor);
     }
 
     public static &lt;K,F,T&gt; $M&lt;K,T&gt; map(Map&lt;K, F&gt; map, TransformVisitor&lt;Map.Entry&lt;K,F&gt;,T&gt; visitor) {
-        return $$(map).map(visitor);
+        return $(map).map(visitor);
     }
 
     public static &lt;K,F,T&gt; $M&lt;K,T&gt; map(Map&lt;K, F&gt; map, TransformPairVisitor&lt;K,F,T&gt; visitor) {
-        return $$(map).map(visitor);
+        return $(map).map(visitor);
     }
 
     public static &lt;K&gt; K reduce(K[] it, ReducePairVisitor&lt;K&gt; visitor) {
-        return $$(it).reduce(visitor);
+        return $(it).reduce(visitor);
     }
 
 }</code></pre>
-      </td>
-    </tr>
-  </table>
+            </td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

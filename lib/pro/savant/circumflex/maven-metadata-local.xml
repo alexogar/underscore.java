@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <plugins>
+    <plugin>
+      <name>Circumflex Maven Plugin</name>
+      <prefix>cx</prefix>
+      <artifactId>maven-cx-plugin</artifactId>
+    </plugin>
+    <plugin>
+      <name>Circumflex Application Archetype</name>
+      <prefix>webapp-archetype</prefix>
+      <artifactId>webapp-archetype</artifactId>
+    </plugin>
+  </plugins>
+</metadata>

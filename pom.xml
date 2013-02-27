@@ -12,6 +12,8 @@
         <docco.filenameRegex>.*java$</docco.filenameRegex>
         <docco.useScaladoc>true</docco.useScaladoc>
         <docco.outputPath>docs</docco.outputPath>
+        <docco.templates.page>/batch-page.html.ftl</docco.templates.page>
+        <docco.templates.index>/index.html.ftl</docco.templates.index>
     </properties>
 
     <dependencies>
@@ -29,6 +31,20 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>localRepo</id>
+            <url>file:///${basedir}</url>
+            <snapshots/>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>localPlugins</id>
+            <url>file:///${basedir}</url>
+            <snapshots/>
+        </pluginRepository>
+    </pluginRepositories>
     <build>
         <plugins>
             <plugin>
@@ -42,16 +58,29 @@
             </plugin>
 
             <plugin>
-                <groupId>ru.circumflex</groupId>
+                <groupId>pro.savant.circumflex</groupId>
                 <artifactId>maven-cx-plugin</artifactId>
-                <version>2.5</version>
+                <version>3.0-SNAPSHOT</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.slf4j</groupId>
                         <artifactId>slf4j-nop</artifactId>
                         <version>1.7.2</version>
                     </dependency>
+                    <dependency>
+                        <groupId>underscore.java</groupId>
+                        <artifactId>underscore.java</artifactId>
+                        <version>1.0-SNAPSHOT</version>
+                    </dependency>
                 </dependencies>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>docco</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
