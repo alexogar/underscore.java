@@ -105,6 +105,18 @@ public class $C<T> extends AbstractCollection<T>{
         return filtered;
     }
 
+    public $C<T> reject(Matcher<T> matcher) {
+        return filter((T t)->!matcher.match(t));
+    }
+
+    public boolean every(Matcher<T> matcher) {
+        return find((T t)->!matcher.match(t))==null;
+    }
+
+    public boolean some(Matcher<T> matcher) {
+        return find(matcher)!=null;
+    }
+
     public T[] array() {
         return (T[]) internal.toArray();
     }
