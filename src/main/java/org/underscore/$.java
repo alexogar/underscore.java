@@ -3,6 +3,7 @@ package org.underscore;
 import org.underscore.functors.*;
 import org.underscore.wrappers.$C;
 import org.underscore.wrappers.$M;
+import org.underscore.wrappers.$O;
 
 import java.util.*;
 
@@ -12,6 +13,10 @@ import java.util.*;
  * Time: 9:22 PM
  */
 public final class $ {
+
+    public static <E> $O<E> $(E e) {
+        return new $O<>(e);
+    }
 
     public static <E> $C<E> $(Collection<E> it) {
         return new $C<>(it);

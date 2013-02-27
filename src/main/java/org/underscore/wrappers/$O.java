@@ -8,6 +8,9 @@ package org.underscore.wrappers;
 public class $O<T> {
     private T reference;
 
+    $O() {
+    }
+
     public $O(T reference) {
         this.reference = reference;
     }
