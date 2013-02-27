@@ -34,14 +34,14 @@
     <repositories>
         <repository>
             <id>localRepo</id>
-            <url>file:///${basedir}</url>
+            <url>file:///${basedir}/lib</url>
             <snapshots/>
         </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
             <id>localPlugins</id>
-            <url>file:///${basedir}</url>
+            <url>file:///${basedir}/lib</url>
             <snapshots/>
         </pluginRepository>
     </pluginRepositories>
