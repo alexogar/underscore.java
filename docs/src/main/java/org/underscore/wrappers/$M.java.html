@@ -39,6 +39,7 @@ import org.underscore.functors.EachPairVisitor;
 import org.underscore.functors.EachVisitor;
 import org.underscore.functors.TransformPairVisitor;
 import org.underscore.functors.TransformVisitor;
+import org.underscore.processor.IncludeInMain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,6 +106,31 @@ import java.util.Map;</code></pre>
 
     public $C&lt;V&gt; values() {
         return new $C&lt;&gt;(internal.values());
+    }
+
+    @IncludeInMain
+    public static &lt;K,V&gt; $M&lt;K,V&gt; $(Map&lt;K, V&gt; map) {
+        return new $M&lt;&gt;(map);
+    }
+
+    @IncludeInMain
+    public static &lt;K, V&gt; $M&lt;K,V&gt; each(Map&lt;K, V&gt; map, EachPairVisitor&lt;K, V&gt; visitor) {
+        return $(map).each(visitor);
+    }
+
+    @IncludeInMain
+    public static &lt;K, V&gt; $M&lt;K,V&gt; each(Map&lt;K, V&gt; map, EachVisitor&lt;Map.Entry&lt;K, V&gt;&gt; visitor) {
+        return $(map).each(visitor);
+    }
+
+    @IncludeInMain
+    public static &lt;K,F,T&gt; $M&lt;K,T&gt; map(Map&lt;K, F&gt; map, TransformVisitor&lt;Map.Entry&lt;K,F&gt;,T&gt; visitor) {
+        return $(map).map(visitor);
+    }
+
+    @IncludeInMain
+    public static &lt;K,F,T&gt; $M&lt;K,T&gt; map(Map&lt;K, F&gt; map, TransformPairVisitor&lt;K,F,T&gt; visitor) {
+        return $(map).map(visitor);
     }
 }</code></pre>
             </td>
