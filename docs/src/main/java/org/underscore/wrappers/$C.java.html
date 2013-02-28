@@ -36,6 +36,7 @@
                 <pre class="java"><code>package org.underscore.wrappers;
 
 import org.underscore.functors.*;
+import org.underscore.processor.IncludeInMain;
 
 import java.util.*;</code></pre>
             </td>
@@ -52,12 +53,12 @@ import java.util.*;</code></pre>
 </p>
             </td>
             <td class="code">
-                <pre class="java"><code>public class $C&lt;T&gt; {
+                <pre class="java"><code>public class $C&lt;T&gt; extends AbstractCollection&lt;T&gt;{
 
     private final Collection&lt;T&gt; internal;
 
     public $C() {
-        internal = new ArrayList&lt;&gt;();
+        this(new ArrayList&lt;&gt;());
     }
 
     public $C(T[] arr) {
@@ -81,6 +82,18 @@ import java.util.*;</code></pre>
         return this;
     }
 
+    public $C&lt;T&gt; each(EachNextVisitor&lt;T&gt; visitor) {
+        int i = 0;
+        for (T t : internal) {
+            $O&lt;Boolean&gt; called = $O.$(false);
+            visitor.visit(t,()-&gt;{called.set(true);});
+            if (!called.get()){
+                break;
+            }
+        }
+        return this;
+    }
+
     public $C&lt;T&gt; each(EachPairVisitor&lt;T, Integer&gt; visitor) {
         int i = 0;
         for (T t : internal) {
@@ -96,23 +109,118 @@ import java.util.*;</code></pre>
         return new $C&lt;&gt;(list);
     }
 
-    public T reduce(ReducePairVisitor&lt;T&gt; visitor){
-        T result = null;
-        T[] objects = array();
-        T t0 = objects[0];
-        for (int i = 1; i &lt; objects.length; i++) {
-            T t = objects[i];
-            if(result == null) {
-                result = visitor.visit(t, t0);
+    public &lt;MEMO&gt; MEMO reduce(MEMO memo, ReducePairVisitor&lt;MEMO,T&gt; visitor){
+        $O&lt;MEMO&gt; work = $O.$(memo);
+        each((T t)-&gt;{
+            work.set(visitor.visit(work.get(),t));
+        });
+
+        return work.get();
+    }
+
+    public T find(Matcher&lt;T&gt; matcher) {
+
+        $O&lt;T&gt; result = new $O&lt;&gt;();
+
+        each((T t,Next f)-&gt; {
+            if (!matcher.match(t)) {
+                f.call();
             } else {
-                result = visitor.visit(t, result);
+                result.set(t);
             }
-        }
-        return result;
+        });
+
+
+        return result.get();
+    }
+
+    public $C&lt;T&gt; filter(Matcher&lt;T&gt; matcher) {
+
+        $C&lt;T&gt; filtered = new $C&lt;&gt;();
+
+        each((T t)-&gt;{
+            if (matcher.match(t)){
+                filtered.add(t);
+            }
+        });
+
+        return filtered;
+    }
+
+    public $C&lt;T&gt; reject(Matcher&lt;T&gt; matcher) {
+        return filter((T t)-&gt;!matcher.match(t));
+    }
+
+    public boolean every(Matcher&lt;T&gt; matcher) {
+        return find((T t)-&gt;!matcher.match(t))==null;
+    }
+
+    public boolean some(Matcher&lt;T&gt; matcher) {
+        return find(matcher)!=null;
     }
 
     public T[] array() {
         return (T[]) internal.toArray();
+    }
+
+    @IncludeInMain
+    public static &lt;E&gt; $C&lt;E&gt; each(E[] it, EachVisitor&lt;E&gt; visitor) {
+        return $(it).each(visitor);
+    }
+
+    @IncludeInMain
+    public static &lt;E&gt; $C&lt;E&gt; $(Collection&lt;E&gt; it) {
+        return new $C&lt;&gt;(it);
+    }
+
+    @IncludeInMain
+    public static &lt;E&gt; $C&lt;E&gt; $(E[] it) {
+        return new $C&lt;&gt;(it);
+    }
+
+    @IncludeInMain
+    public static &lt;E&gt; $C&lt;E&gt; each(Collection&lt;E&gt; it, EachVisitor&lt;E&gt; visitor) {
+        return $(it).each(visitor);
+    }
+
+    @IncludeInMain
+    public static &lt;E&gt; $C&lt;E&gt; each(E[] it, EachPairVisitor&lt;E, Integer&gt; visitor) {
+        return $(it).each(visitor);
+    }
+
+    @IncludeInMain
+    public static &lt;E&gt; $C&lt;E&gt; each(Collection&lt;E&gt; it, EachPairVisitor&lt;E, Integer&gt; visitor) {
+        return $(it).each(visitor);
+    }
+
+    @IncludeInMain
+    public static &lt;F,T&gt; $C&lt;T&gt; map(Collection&lt;F&gt; it, TransformVisitor&lt;F,T&gt; visitor){
+        return $(it).map(visitor);
+    }
+
+    @IncludeInMain
+    public static &lt;F,T&gt; $C&lt;T&gt; map(F[] it, TransformVisitor&lt;F,T&gt; visitor) {
+        return $(it).map(visitor);
+    }
+
+    @IncludeInMain
+    public static &lt;K,MEMO&gt; MEMO reduce(K[] it, MEMO memo, ReducePairVisitor&lt;MEMO,K&gt; visitor) {
+        return $(it).reduce(memo,visitor);
+    }
+
+    @Override
+    public Iterator&lt;T&gt; iterator() {
+        return internal.iterator();
+    }
+
+    @Override
+    public boolean add(T t) {
+        return internal.add(t);
+    }
+
+    @Override
+    public int size() {
+        return internal.size();
     }
 }</code></pre>
             </td>

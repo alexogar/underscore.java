@@ -49,7 +49,7 @@ public class MapTest {
         Assert.assertArrayEquals(new Integer[]{2, 4, 6}, result2.array());
 
 
-        $M<Integer, String> result3=$.map(new HashMap<Integer, Integer>() {{
+        $M<Integer, String> result3= $.map(new HashMap<Integer, Integer>() {{
             put(1, 1);
             put(2, 2);
             put(3, 3);
