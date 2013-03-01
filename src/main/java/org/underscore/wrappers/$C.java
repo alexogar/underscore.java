@@ -1,10 +1,9 @@
 package org.underscore.wrappers;
 
 import org.underscore.functors.*;
+import org.underscore.processor.IncludeInMain;
 
 import java.util.*;
-
-import static org.underscore.$.$;
 
 /**
  * User: alexogar
@@ -43,7 +42,7 @@ public class $C<T> extends AbstractCollection<T>{
     public $C<T> each(EachNextVisitor<T> visitor) {
         int i = 0;
         for (T t : internal) {
-            $O<Boolean> called = $(false);
+            $O<Boolean> called = $O.$(false);
             visitor.visit(t,()->{called.set(true);});
             if (!called.get()){
                 break;
@@ -68,7 +67,7 @@ public class $C<T> extends AbstractCollection<T>{
     }
 
     public <MEMO> MEMO reduce(MEMO memo, ReducePairVisitor<MEMO,T> visitor){
-        $O<MEMO> work = $(memo);
+        $O<MEMO> work = $O.$(memo);
         each((T t)->{
             work.set(visitor.visit(work.get(),t));
         });
@@ -119,6 +118,51 @@ public class $C<T> extends AbstractCollection<T>{
 
     public T[] array() {
         return (T[]) internal.toArray();
+    }
+
+    @IncludeInMain
+    public static <E> $C<E> each(E[] it, EachVisitor<E> visitor) {
+        return $(it).each(visitor);
+    }
+
+    @IncludeInMain
+    public static <E> $C<E> $(Collection<E> it) {
+        return new $C<>(it);
+    }
+
+    @IncludeInMain
+    public static <E> $C<E> $(E[] it) {
+        return new $C<>(it);
+    }
+
+    @IncludeInMain
+    public static <E> $C<E> each(Collection<E> it, EachVisitor<E> visitor) {
+        return $(it).each(visitor);
+    }
+
+    @IncludeInMain
+    public static <E> $C<E> each(E[] it, EachPairVisitor<E, Integer> visitor) {
+        return $(it).each(visitor);
+    }
+
+    @IncludeInMain
+    public static <E> $C<E> each(Collection<E> it, EachPairVisitor<E, Integer> visitor) {
+        return $(it).each(visitor);
+    }
+
+    @IncludeInMain
+    public static <F,T> $C<T> map(Collection<F> it, TransformVisitor<F,T> visitor){
+        return $(it).map(visitor);
+    }
+
+    @IncludeInMain
+    public static <F,T> $C<T> map(F[] it, TransformVisitor<F,T> visitor) {
+        return $(it).map(visitor);
+    }
+
+    @IncludeInMain
+    public static <K,MEMO> MEMO reduce(K[] it, MEMO memo, ReducePairVisitor<MEMO,K> visitor) {
+        return $(it).reduce(memo,visitor);
     }
 
     @Override

@@ -6,14 +6,16 @@
 
     <groupId>underscore.java</groupId>
     <artifactId>underscore.java</artifactId>
+    <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
+
 
     <properties>
         <docco.filenameRegex>.*java$</docco.filenameRegex>
         <docco.useScaladoc>true</docco.useScaladoc>
         <docco.outputPath>docs</docco.outputPath>
-        <docco.templates.page>/batch-page.html.ftl</docco.templates.page>
-        <docco.templates.index>/index.html.ftl</docco.templates.index>
+        <docco.templates.page>/docco/batch-page.html.ftl</docco.templates.page>
+        <docco.templates.index>/docco/index.html.ftl</docco.templates.index>
     </properties>
 
     <dependencies>
@@ -25,11 +27,27 @@
         </dependency>
 
         <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.16</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.5</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.sun</groupId>
+            <artifactId>tools</artifactId>
+            <version>1.8.0</version>
+            <scope>system</scope>
+            <systemPath>${java.home}/../lib/tools.jar</systemPath>
+        </dependency>
+
     </dependencies>
     <repositories>
         <repository>
@@ -47,6 +65,7 @@
     </pluginRepositories>
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -55,6 +74,52 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+                <inherited>true</inherited>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <inherited>true</inherited>
+                        <configuration>
+                            <includes>
+                                <include>**/processor/*.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>after-processing</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <inherited>false</inherited>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/processor/MainGenerator.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.bsc.maven</groupId>
+                <artifactId>maven-processor-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <processors>
+                        <!-- list of processors to use -->
+                        <processor>org.underscore.processor.MainGenerator</processor>
+                    </processors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>process</id>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <phase>compile</phase>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -81,6 +146,16 @@
                         <phase>package</phase>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                    <excludes><exclude>**/processor/MainGenerator**</exclude></excludes>
+                </configuration>
+                <inherited>true</inherited>
             </plugin>
 
         </plugins>

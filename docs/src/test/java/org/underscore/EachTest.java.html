@@ -102,12 +102,12 @@ import java.util.concurrent.atomic.AtomicBoolean;</code></pre>
         answers.clear();
 
         answers.add(0);
-        $.each(new HashMap&lt;Integer,Integer&gt;() {{
-            put(1,1);
-            put(2,2);
-            put(3,3);
-        }}, (Integer key,Integer value) -&gt; {
-            answers.add(answers.remove(0)+key);
+        $.each(new HashMap&lt;Integer, Integer&gt;() {{
+            put(1, 1);
+            put(2, 2);
+            put(3, 3);
+        }}, (Integer key, Integer value) -&gt; {
+            answers.add(answers.remove(0) + key);
         });
 
         Assert.assertEquals(6, answers.get(0).intValue());
@@ -128,11 +128,11 @@ import java.util.concurrent.atomic.AtomicBoolean;</code></pre>
         });
 
 
-        $.each(new HashMap&lt;Integer,Integer&gt;() {{
-            put(1,1);
-            put(2,2);
-            put(3,3);
-        }}, (Integer key,Integer value) -&gt; {
+        $.each(new HashMap&lt;Integer, Integer&gt;() {{
+            put(1, 1);
+            put(2, 2);
+            put(3, 3);
+        }}, (Integer key, Integer value) -&gt; {
             Assert.assertEquals(key, value);
         });
     }

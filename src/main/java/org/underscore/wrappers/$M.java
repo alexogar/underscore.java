@@ -4,6 +4,7 @@ import org.underscore.functors.EachPairVisitor;
 import org.underscore.functors.EachVisitor;
 import org.underscore.functors.TransformPairVisitor;
 import org.underscore.functors.TransformVisitor;
+import org.underscore.processor.IncludeInMain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,5 +63,30 @@ public class $M<K, V> {
 
     public $C<V> values() {
         return new $C<>(internal.values());
+    }
+
+    @IncludeInMain
+    public static <K,V> $M<K,V> $(Map<K, V> map) {
+        return new $M<>(map);
+    }
+
+    @IncludeInMain
+    public static <K, V> $M<K,V> each(Map<K, V> map, EachPairVisitor<K, V> visitor) {
+        return $(map).each(visitor);
+    }
+
+    @IncludeInMain
+    public static <K, V> $M<K,V> each(Map<K, V> map, EachVisitor<Map.Entry<K, V>> visitor) {
+        return $(map).each(visitor);
+    }
+
+    @IncludeInMain
+    public static <K,F,T> $M<K,T> map(Map<K, F> map, TransformVisitor<Map.Entry<K,F>,T> visitor) {
+        return $(map).map(visitor);
+    }
+
+    @IncludeInMain
+    public static <K,F,T> $M<K,T> map(Map<K, F> map, TransformPairVisitor<K,F,T> visitor) {
+        return $(map).map(visitor);
     }
 }

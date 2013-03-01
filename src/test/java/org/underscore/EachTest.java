@@ -62,12 +62,12 @@ public class EachTest {
         answers.clear();
 
         answers.add(0);
-        $.each(new HashMap<Integer,Integer>() {{
-            put(1,1);
-            put(2,2);
-            put(3,3);
-        }}, (Integer key,Integer value) -> {
-            answers.add(answers.remove(0)+key);
+        $.each(new HashMap<Integer, Integer>() {{
+            put(1, 1);
+            put(2, 2);
+            put(3, 3);
+        }}, (Integer key, Integer value) -> {
+            answers.add(answers.remove(0) + key);
         });
 
         Assert.assertEquals(6, answers.get(0).intValue());
@@ -88,11 +88,11 @@ public class EachTest {
         });
 
 
-        $.each(new HashMap<Integer,Integer>() {{
-            put(1,1);
-            put(2,2);
-            put(3,3);
-        }}, (Integer key,Integer value) -> {
+        $.each(new HashMap<Integer, Integer>() {{
+            put(1, 1);
+            put(2, 2);
+            put(3, 3);
+        }}, (Integer key, Integer value) -> {
             Assert.assertEquals(key, value);
         });
     }
