@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>EachTest.java</title>
+    <link href="http://circumflex.ru/css/docco.css"
+          rel="stylesheet"
+          type="text/css"
+          media="screen, projection"/>
+    <script type="text/javascript" src="http://circumflex.ru/js/highlight.pack.js">
+    </script>
+    <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
+    </script>
+</head>
+<body>
+<div id="container">
+    <table cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th class="docs">
+                <h1><a href="../../../../../index.html" title="Back to index">&larr;</a>&nbsp;&nbsp;EachTest.java</h1>
+            </th>
+            <th class="code"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr id="section-0">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-0">#</a>
+                </div>
+            
+            </td>
+            <td class="code">
+                <pre class="java"><code>package org.underscore;
+
+
+import junit.framework.Assert;
+import org.apache.commons.lang.StringUtils;
+import org.junit.Test;
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;</code></pre>
+            </td>
+        </tr>
+        <tr id="section-1">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-1">#</a>
+                </div>
+            <p>User: alexogar
+  Date: 2/23/13
+  Time: 9:51 PM
+  $.each([1, 2, 3], function(num, i) {
+ equal(num, i + 1, &apos;each iterators provide value and iteration count&apos;);
+ });
+
+</p><p>var answers = [];
+ $.each([1, 2, 3], function(num){ answers.push(num  this.multiplier);}, {multiplier : 5});
+ equal(answers.join(&apos;, &apos;), &apos;5, 10, 15&apos;, &apos;context object property accessed&apos;);
+
+</p><p>answers = [];
+ $.forEach([1, 2, 3], function(num){ answers.push(num); });
+ equal(answers.join(&apos;, &apos;), &apos;1, 2, 3&apos;, &apos;aliased as «forEach&quot;&apos;);
+
+</p><p>var answer = null;
+ $.each([1, 2, 3], function(num, index, arr){ if ($.include(arr, num)) answer = true; });
+ ok(answer, &apos;can reference the original collection from inside the iterator&apos;);
+
+</p><p>answers = 0;
+ $.each(null, function(){ ++answers; });
+ equal(answers, 0, &apos;handles a null properly&apos;);
+ 
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>public class EachTest {
+
+    @Test
+    public void eachTest() {
+        List&lt;Integer&gt; answers = new ArrayList&lt;Integer&gt;();
+        int multiplier = 5;
+        $.each(new Integer[]{1, 2, 3}, (Integer i) -&gt; {
+            answers.add(i * multiplier);
+        });
+
+        Assert.assertEquals(&quot;5,10,15&quot;, StringUtils.join(answers,&quot;,&quot;));
+
+        answers.clear();
+
+        $.each(new ArrayList&lt;Integer&gt;() {{
+            add(1);
+            add(2);
+            add(3);
+        }}, (Integer i) -&gt; {
+            answers.add(i * multiplier);
+        });
+
+        Assert.assertEquals(&quot;5,10,15&quot;, StringUtils.join(answers,&quot;,&quot;));
+
+        answers.clear();
+
+        answers.add(0);
+        $.each(new HashMap&lt;Integer, Integer&gt;() {{
+            put(1, 1);
+            put(2, 2);
+            put(3, 3);
+        }}, (Integer key, Integer value) -&gt; {
+            answers.add(answers.remove(0) + key);
+        });
+
+        Assert.assertEquals(6, answers.get(0).intValue());
+    }
+
+    @Test
+    public void eachWithCountTest() {
+        $.each(new Integer[]{1, 2, 3}, (Integer i, Integer count) -&gt; {
+            Assert.assertEquals(i.intValue(), count + 1);
+        });
+
+        $.each(new ArrayList&lt;Integer&gt;() {{
+            add(1);
+            add(2);
+            add(3);
+        }}, (Integer i, Integer count) -&gt; {
+            Assert.assertEquals(i.intValue(), count + 1);
+        });
+
+
+        $.each(new HashMap&lt;Integer, Integer&gt;() {{
+            put(1, 1);
+            put(2, 2);
+            put(3, 3);
+        }}, (Integer key, Integer value) -&gt; {
+            Assert.assertEquals(key, value);
+        });
+    }
+
+    @Test
+    public void eachWithOriginalTest() {
+        //TODO: implement
+    }
+
+    @Test
+    public void eachWithBadArguments() {
+        AtomicBoolean called = new AtomicBoolean(false);
+        List l = null;
+        $.each(l, (Object i) -&gt; {
+            called.set(true);
+        });
+
+        Assert.assertEquals(false,called.get());
+
+        called.set(false);
+        Object[] l1 = null;
+        $.each(l1, (Object i) -&gt; {
+            called.set(true);
+        });
+
+        Assert.assertEquals(false,called.get());
+    }
+}</code></pre>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
