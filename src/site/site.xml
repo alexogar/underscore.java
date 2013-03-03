@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Underscore.java" xmlns="http://maven.apache.org/DECORATION/1.3.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd">
+
+    <bannerLeft>
+        <name><![CDATA[
+            <span class="color-highlight">Underscore.java</span> Maven Skin
+            ]]>
+        </name>
+        <href>http://alexogar.github.com/underscore.java</href>
+    </bannerLeft>
+
+    <publishDate position="bottom" format="yyyy-MM-dd"/>
+    <version position="bottom"/>
+
+    <skin>
+        <groupId>lt.velykis.maven.skins</groupId>
+        <artifactId>reflow-maven-skin</artifactId>
+        <version>1.0.0</version>
+    </skin>
+    <custom>
+        <reflowSkin>
+            <protocolRelativeURLs>false</protocolRelativeURLs>
+            <smoothScroll>true</smoothScroll>
+            <skinAttribution>false</skinAttribution>
+            <theme>default</theme>
+            <highlightJs>true</highlightJs>
+            <highlightJsTheme>github</highlightJsTheme>
+            <absoluteResourceURL>http://alexogar.github.com/underscore.java</absoluteResourceURL>
+            <brand>
+                <name>Underscore.java</name>
+                <href>http://alexogar.github.com/underscore.java</href>
+            </brand>
+            <slogan>Missed java syntax sugar.</slogan>
+            <titleTemplate>%2$s | %1$s</titleTemplate>
+            <toc>top</toc>
+            <tocTopMax>6</tocTopMax>
+            <topNav>Download|Documentation|reports</topNav>
+            <bottomNav>
+                <column>Main|Download</column>
+                <column>Documentation|Contribute</column>
+                <column>reports|modules</column>
+            </bottomNav>
+            <bottomDescription>
+                <![CDATA[
+          <span class="color-highlight">Underscore.java</span> is an port of
+          <a href="http://underscorejs.org" title="Bootstrap">Underscore.js</a> to Java with some java specific additions.
+                ]]>
+            </bottomDescription>
+            <pages>
+                <index project="underscore.java">
+                    <shortTitle>Underscore.java</shortTitle>
+                    <breadcrumbs>false</breadcrumbs>
+                    <toc>false</toc>
+                    <markPageHeader>false</markPageHeader>
+                    <sections>
+                        <carousel />
+                        <columns>2</columns>
+                        <body />
+                        <sidebar />
+                    </sections>
+                </index>
+                <developer-info>
+                    <toc>sidebar</toc>
+                </developer-info>
+                <contribute>
+                    <breadcrumbs>false</breadcrumbs>
+                </contribute>
+                <!-- Disable source highlighting for Maven reports -->
+                <source-repository>
+                    <highlightJs>false</highlightJs>
+                </source-repository>
+                <issue-tracking>
+                    <highlightJs>false</highlightJs>
+                    <toc>false</toc>
+                </issue-tracking>
+                <license>
+                    <highlightJs>false</highlightJs>
+                    <toc>false</toc>
+                </license>
+                <!-- Disable ToC for some Maven reports -->
+                <project-info>
+                    <toc>false</toc>
+                </project-info>
+                <dependencies>
+                    <tocTopMax>4</tocTopMax>
+                </dependencies>
+            </pages>
+        </reflowSkin>
+    </custom>
+
+    <body>
+        <head>
+            <link rel="author" href=""/>
+        </head>
+
+        <links>
+            <item name="Download" href="index.html#Usage" />
+            <item name="GitHub project" href="https://github.com/alexogar/underscore.java/" />
+        </links>
+
+        <breadcrumbs>
+            <item name="Underscore.java" href="/" />
+        </breadcrumbs>
+
+        <menu name="Main" inherit="top">
+            <item name="Home" href="./" title="Home"/>
+            <item name="GitHub project" href="https://github.com/alexogar/underscore.java/" />
+            <item name="Release notes" href="changes-report.html" />
+        </menu>
+        <menu name="Documentation" inherit="bottom">
+            <item name="Api Docs" href="docs/index.html" />
+            <item name="Configuration" href="config.html" />
+            <item name="Themes" href="skin/themes/" />
+            <item name="Layouts" href="skin/layouts.html" />
+            <item name="Components" href="skin/components.html" />
+            <item name="Other" href="skin/misc.html" />
+            <item name="Multi-module site" href="skin/multi-module.html" />
+        </menu>
+        <menu name="Contribute" inherit="bottom">
+            <item name="Contribute" href="contribute.html" />
+            <item name="Issues" href="http://github.com/alexogar/underscore.java/issues/" />
+            <item name="Fork on GitHub" href="http://github.com/alexogar/underscore.java/" />
+        </menu>
+        <menu name="Maven documentation" ref="reports" inherit="bottom"/>
+    </body>
+</project>
