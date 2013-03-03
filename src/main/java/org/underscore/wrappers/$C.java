@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class $C<T> extends AbstractCollection<T>{
 
-    private final Collection<T> internal;
+    private final ArrayList<T> internal;
 
     public $C() {
         this(new ArrayList<>());
@@ -31,11 +31,18 @@ public class $C<T> extends AbstractCollection<T>{
             internal = new ArrayList<>();
             return;
         }
-        internal = it;
+        internal = new ArrayList<>(it);
     }
 
     public $C<T> each(EachVisitor<T> visitor) {
         for (T e : internal) visitor.visit(e);
+        return this;
+    }
+
+    public $C<T> eachBack(EachVisitor<T> visitor) {
+        for(ListIterator<T> it = internal.listIterator(internal.size()); it.hasPrevious();) {
+            visitor.visit(it.previous());
+        }
         return this;
     }
 
@@ -72,6 +79,12 @@ public class $C<T> extends AbstractCollection<T>{
             work.set(visitor.visit(work.get(),t));
         });
 
+        return work.get();
+    }
+
+    public <MEMO> MEMO reduceRight(MEMO memo, ReducePairVisitor<MEMO,T> visitor) {
+        $O<MEMO> work = $O.$(memo);
+        eachBack((T t)-> work.set(visitor.visit(work.get(),t)));
         return work.get();
     }
 
@@ -162,6 +175,11 @@ public class $C<T> extends AbstractCollection<T>{
 
     @IncludeInMain
     public static <K,MEMO> MEMO reduce(K[] it, MEMO memo, ReducePairVisitor<MEMO,K> visitor) {
+        return $(it).reduce(memo,visitor);
+    }
+
+    @IncludeInMain
+    public static <K,MEMO> MEMO reduceRight(K[] it, MEMO memo, ReducePairVisitor<MEMO,K> visitor) {
         return $(it).reduce(memo,visitor);
     }
 
