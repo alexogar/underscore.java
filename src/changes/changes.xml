@@ -7,7 +7,7 @@
         <author>Super Team</author>
     </properties>
     <body>
-        <release version="1.0.0" date="15 January 2013" description="Initial release of Reflow Maven skin">
+        <release version="1.0.0" date="15 January 2013" description="Initial release of Underscore.java">
             <action type="add" dev="alexogar">
                 Initial release of Underscore.java.
             </action>

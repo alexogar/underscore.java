@@ -23,6 +23,7 @@
         <reflowSkin>
             <protocolRelativeURLs>false</protocolRelativeURLs>
             <smoothScroll>true</smoothScroll>
+            <skinAttribution>false</skinAttribution>
             <theme>default</theme>
             <highlightJs>true</highlightJs>
             <highlightJsTheme>github</highlightJsTheme>
@@ -38,7 +39,7 @@
             <topNav>Download|Documentation|reports</topNav>
             <bottomNav>
                 <column>Main|Download</column>
-                <column>Documentation</column>
+                <column>Documentation|Contribute</column>
                 <column>reports|modules</column>
             </bottomNav>
             <bottomDescription>
@@ -104,14 +105,13 @@
         </breadcrumbs>
 
         <menu name="Main" inherit="top">
-            <item name="Home" href="./" />
+            <item name="Home" href="./" title="Home"/>
             <item name="GitHub project" href="https://github.com/alexogar/underscore.java/" />
-            <item name="Blog" href="http://andrius.velykis.lt/tag/reflow-maven-skin/" />
             <item name="Release notes" href="changes-report.html" />
         </menu>
         <menu name="Documentation" inherit="bottom">
-            <item name="Usage" href="skin/" />
-            <item name="Configuration" href="skin/config.html" />
+            <item name="Api Docs" href="docs/index.html" />
+            <item name="Configuration" href="config.html" />
             <item name="Themes" href="skin/themes/" />
             <item name="Layouts" href="skin/layouts.html" />
             <item name="Components" href="skin/components.html" />
@@ -120,9 +120,8 @@
         </menu>
         <menu name="Contribute" inherit="bottom">
             <item name="Contribute" href="contribute.html" />
-            <item name="Issues" href="http://github.com/andriusvelykis/reflow-maven-skin/issues/" />
-            <item name="Fork on GitHub" href="http://github.com/andriusvelykis/reflow-maven-skin/" />
-            <item name="Donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=QWKNRFZH52828" />
+            <item name="Issues" href="http://github.com/alexogar/underscore.java/issues/" />
+            <item name="Fork on GitHub" href="http://github.com/alexogar/underscore.java/" />
         </menu>
         <menu name="Maven documentation" ref="reports" inherit="bottom"/>
     </body>
