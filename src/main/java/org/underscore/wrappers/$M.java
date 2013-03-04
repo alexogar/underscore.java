@@ -6,17 +6,14 @@ import org.underscore.functors.TransformPairVisitor;
 import org.underscore.functors.TransformVisitor;
 import org.underscore.processor.IncludeInMain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * User: alexogar
  * Date: 2/25/13
  * Time: 10:14 AM
  */
-public class $M<K, V> {
+public class $M<K, V> implements Map<K,V>{
     private final Map<K, V> internal;
 
     public $M() {
@@ -28,14 +25,14 @@ public class $M<K, V> {
     }
 
     public $M<K, V> each(EachPairVisitor<K, V> visitor) {
-        for (Map.Entry<K, V> entry : internal.entrySet()) {
+        for (Map.Entry<K, V> entry : entrySet()) {
             visitor.visit(entry.getKey(), entry.getValue());
         }
         return this;
     }
 
     public $M<K, V> each(EachVisitor<Map.Entry<K, V>> visitor) {
-        for (Map.Entry<K, V> entry : internal.entrySet()) {
+        for (Map.Entry<K, V> entry : entrySet()) {
             visitor.visit(entry);
         }
         return this;
@@ -58,11 +55,20 @@ public class $M<K, V> {
     }
 
     public $C<K> keys() {
-        return new $C<>(internal.keySet());
+        return new $C<>(keySet());
     }
 
     public $C<V> values() {
-        return new $C<>(internal.values());
+        return new $C<>(values());
+    }
+
+    public $C<Entry<K,V>> entries() {
+        return new $C<>(entrySet());
+    }
+
+    @Override
+    public Set<Entry<K,V>> entrySet() {
+        return internal.entrySet();
     }
 
     @IncludeInMain
@@ -88,5 +94,53 @@ public class $M<K, V> {
     @IncludeInMain
     public static <K,F,T> $M<K,T> map(Map<K, F> map, TransformPairVisitor<K,F,T> visitor) {
         return $(map).map(visitor);
+    }
+
+    @Override
+    public int size() {
+        return internal.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return internal.isEmpty();
+    }
+
+    @Override
+    public boolean containsKey(Object key) {
+        return internal.containsKey(key);
+    }
+
+    @Override
+    public boolean containsValue(Object value) {
+        return internal.containsValue(value);
+    }
+
+    @Override
+    public V get(Object key) {
+        return internal.get(key);
+    }
+
+    public V put(K key, V value) {
+        return internal.put(key, value);
+    }
+
+    @Override
+    public V remove(Object key) {
+        return internal.remove(key);
+    }
+
+    public void putAll(Map<? extends K, ? extends V> m) {
+        internal.putAll(m);
+    }
+
+    @Override
+    public void clear() {
+        internal.clear();
+    }
+
+    @Override
+    public Set<K> keySet() {
+        return internal.keySet();
     }
 }
