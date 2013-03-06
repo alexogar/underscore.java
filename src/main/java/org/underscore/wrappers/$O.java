@@ -22,4 +22,13 @@ public class $O<T> extends AtomicReference<T> {
     public static <E> $O<E> $(E e) {
         return new $O<>(e);
     }
+
+    public CharSequence str() {
+        return (this instanceof CharSequence) ? (CharSequence) this : this.toString();
+    }
+
+    @IncludeInMain
+    public static CharSequence str(Object part) {
+        return new $O(part).str();
+    }
 }
