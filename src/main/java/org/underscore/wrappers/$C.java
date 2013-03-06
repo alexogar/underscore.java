@@ -3,6 +3,7 @@ package org.underscore.wrappers;
 import org.underscore.functors.*;
 import org.underscore.processor.IncludeInMain;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -246,7 +247,34 @@ public class $C<T> extends AbstractCollection<T>{
         return find(matcher)!=null;
     }
 
+    public String join() {
+        return join(",");
+    }
 
+    public String join(String separator) {
+        return joinTo(separator,new StringBuilder()).toString();
+    }
+
+    public Appendable joinTo(String separator,StringBuilder builder) {
+        try {
+            joinTo(separator, (Appendable) builder);
+        } catch (IOException impossible) {
+            throw new AssertionError();
+        }
+        return builder;
+    }
+
+    public Appendable joinTo(String separator,Appendable appendable) throws IOException {
+        Iterator<T> it = internal.iterator();
+        if (it.hasNext()) {
+            appendable.append($O.str(it.next()));
+            while (it.hasNext()) {
+                appendable.append(separator);
+                appendable.append($O.str(it.next()));
+            }
+        }
+        return appendable;
+    }
 
     /**
      * Array transformation
@@ -255,6 +283,46 @@ public class $C<T> extends AbstractCollection<T>{
     @SuppressWarnings("unchecked")
     public T[] array() {
         return (T[]) internal.toArray();
+    }
+
+    @IncludeInMain
+    public static <E> String join(Collection<E> collection) {
+        return new $C<>(collection).join();
+    }
+
+    @IncludeInMain
+    public static <E> String join(E[] collection) {
+        return new $C<>(collection).join();
+    }
+
+    @IncludeInMain
+    public static <E> String join(Collection<E> collection,String separator) {
+        return new $C<>(collection).join(separator);
+    }
+
+    @IncludeInMain
+    public static <E> String join(E[] collection,String separator) {
+        return new $C<>(collection).join(separator);
+    }
+
+    @IncludeInMain
+    public static <E> Appendable joinTo(Collection<E> collection,String separator, Appendable appendable) throws IOException {
+        return new $C<>(collection).joinTo(separator, appendable);
+    }
+
+    @IncludeInMain
+    public static <E> Appendable joinTo(E[] collection,String separator, Appendable appendable) throws IOException {
+        return new $C<>(collection).joinTo(separator, appendable);
+    }
+
+    @IncludeInMain
+    public static <E> Appendable joinTo(Collection<E> collection,String separator, StringBuilder appendable) {
+        return new $C<>(collection).joinTo(separator, appendable);
+    }
+
+    @IncludeInMain
+    public static <E> Appendable joinTo(E[] collection,String separator, StringBuilder appendable) {
+        return new $C<>(collection).joinTo(separator, appendable);
     }
 
     @IncludeInMain
@@ -290,6 +358,17 @@ public class $C<T> extends AbstractCollection<T>{
     @IncludeInMain
     public static <E> $C<E> $(E[] it) {
         return new $C<>(it);
+    }
+
+    @IncludeInMain
+    public static <E> $C<E> $(E first, E second, E... rest) {
+        E[] args = (E[]) new Object[rest.length+2];
+
+        args[0]=first;
+        args[1]=second;
+
+        System.arraycopy(rest,0,args,2,rest.length);
+        return new $C<>(args);
     }
 
     @IncludeInMain

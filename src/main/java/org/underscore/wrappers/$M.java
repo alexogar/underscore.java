@@ -59,7 +59,7 @@ public class $M<K, V> implements Map<K,V>{
     }
 
     public $C<V> values() {
-        return new $C<>(values());
+        return new $C<>(internal.values());
     }
 
     public $C<Entry<K,V>> entries() {
