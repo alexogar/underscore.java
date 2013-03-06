@@ -110,13 +110,10 @@
             <item name="Release notes" href="changes-report.html" />
         </menu>
         <menu name="Documentation" inherit="bottom">
-            <item name="Api Docs" href="docs/index.html" />
-            <item name="Configuration" href="config.html" />
-            <item name="Themes" href="skin/themes/" />
-            <item name="Layouts" href="skin/layouts.html" />
-            <item name="Components" href="skin/components.html" />
-            <item name="Other" href="skin/misc.html" />
-            <item name="Multi-module site" href="skin/multi-module.html" />
+            <item name="Usage" href="wiki/Usage.html"/>
+            <item name="Collections" href="wiki/Collection-Functions.html"/>
+            <item name="Literate Docs" href="docs/index.html" />
+            <item name="Standart Docs" href="apidocs/index.html" />
         </menu>
         <menu name="Contribute" inherit="bottom">
             <item name="Contribute" href="contribute.html" />
