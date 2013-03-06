@@ -35,7 +35,9 @@
             <td class="code">
                 <pre class="java"><code>package org.underscore.wrappers;
 
-import org.underscore.processor.IncludeInMain;</code></pre>
+import org.underscore.processor.IncludeInMain;
+
+import java.util.concurrent.atomic.AtomicReference;</code></pre>
             </td>
         </tr>
         <tr id="section-1">
@@ -50,18 +52,14 @@ import org.underscore.processor.IncludeInMain;</code></pre>
 </p>
             </td>
             <td class="code">
-                <pre class="java"><code>public class $O&lt;T&gt; {
-    private T reference;
+                <pre class="java"><code>public class $O&lt;T&gt; extends AtomicReference&lt;T&gt; {
 
     $O() {
     }
 
     public $O(T reference) {
-        this.reference = reference;
+        super(reference);
     }
-
-    public void set(T reference) {this.reference = reference; }
-    public T get(){return this.reference;}
 
     @IncludeInMain
     public static &lt;E&gt; $O&lt;E&gt; $(E e) {

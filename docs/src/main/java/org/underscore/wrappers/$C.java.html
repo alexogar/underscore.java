@@ -46,82 +46,301 @@ import java.util.*;</code></pre>
                 <div class="octowrap">
                     <a class="octothorpe" href="#section-1">#</a>
                 </div>
-            <p>User: alexogar
-  Date: 2/24/13
-  Time: 1:25 PM
+            <p>This class will represent wrapper on all Collections specific functions for our super library.
+  It will be suitable for arrays as well.
  
 </p>
             </td>
             <td class="code">
                 <pre class="java"><code>public class $C&lt;T&gt; extends AbstractCollection&lt;T&gt;{
 
-    private final Collection&lt;T&gt; internal;
-
-    public $C() {
+    private final Collection&lt;T&gt; internal;</code></pre>
+            </td>
+        </tr>
+        <tr id="section-2">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-2">#</a>
+                </div>
+            <p>Empty constructor will initialize internal ArrayList.
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public $C() {
         this(new ArrayList&lt;&gt;());
-    }
-
-    public $C(T[] arr) {
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-3">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-3">#</a>
+                </div>
+            <p>Constructor with array, will initialize internal ArrayList with array base.
+      @param arr Array input parameter
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public $C(T[] arr) {
         if (arr == null) {
             internal = new ArrayList&lt;&gt;();
             return;
         }
         internal = new ArrayList&lt;&gt;(Arrays.asList(arr));
-    }
-
-    public $C(Collection&lt;T&gt; it) {
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-4">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-4">#</a>
+                </div>
+            <p>Constructor with collection initialization. Passed collection will be used as internal implementation.
+      @param it
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public $C(Collection&lt;T&gt; it) {
         if (it == null) {
             internal = new ArrayList&lt;&gt;();
             return;
         }
         internal = it;
-    }
-
-    public $C&lt;T&gt; each(EachVisitor&lt;T&gt; visitor) {
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-5">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-5">#</a>
+                </div>
+            <p>Each will iterate collection and call visitor method.
+     
+</p><p>@param visitor EachVisitor
+      @return self for chaining
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public $C&lt;T&gt; each(EachVisitor&lt;T&gt; visitor) {
         for (T e : internal) visitor.visit(e);
         return this;
-    }
-
-    public $C&lt;T&gt; each(EachNextVisitor&lt;T&gt; visitor) {
-        int i = 0;
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-6">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-6">#</a>
+                </div>
+            <p>Iterates thought collection backwards, this working only for List implementations.
+      @param visitor
+      @return self for chaining
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public $C&lt;T&gt; eachBack(EachVisitor&lt;T&gt; visitor) {
+        reverse().each(visitor);
+        return this;
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-7">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-7">#</a>
+                </div>
+            <p>Each implementation with ability to stop iteration.
+      @param visitor EachNextVisitor that will need to call next each iteration to proceed
+      @return self for chaining
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public $C&lt;T&gt; each(EachNextVisitor&lt;T&gt; visitor) {
+        //We iterating through original
         for (T t : internal) {
+            //Prepare object for checking whether next call was called
             $O&lt;Boolean&gt; called = $O.$(false);
-            visitor.visit(t,()-&gt;{called.set(true);});
+            //Visit element
+            visitor.visit(t,()-&gt;called.set(true));
+            //Check whether next was called in visitor, if not then break
             if (!called.get()){
                 break;
             }
         }
         return this;
-    }
-
-    public $C&lt;T&gt; each(EachPairVisitor&lt;T, Integer&gt; visitor) {
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-8">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-8">#</a>
+                </div>
+            <p>Each implementation with index also passed along with element
+      @param visitor visitor with element and index
+      @return self for chaining
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public $C&lt;T&gt; each(EachPairVisitor&lt;T, Integer&gt; visitor) {
         int i = 0;
         for (T t : internal) {
             visitor.visit(t, i);
             i++;
         }
         return this;
-    }
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-9">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-9">#</a>
+                </div>
+            <p>Reverses entire collection, this will work only for List implementation because they only have order.
+      @return new $C instance with reverted collection
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public $C&lt;T&gt; reverse() {
+        if (!isList()) {
+            throw new UnsupportedOperationException(&quot;Operation is only supported for List implementations&quot;);
+        }
 
-    public &lt;E&gt; $C&lt;E&gt; map(TransformVisitor&lt;T,E&gt; visitor){
+        List&lt;T&gt; list = new ArrayList&lt;&gt;(internal);
+        Collections.reverse(list);
+        return new $C&lt;&gt;(list);
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-10">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-10">#</a>
+                </div>
+            <p>List representation transformer
+      @return original if it was list, or new ArrayList if not
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public List&lt;T&gt; list() {
+        return isList()? (List&lt;T&gt;) internal :new ArrayList&lt;&gt;(internal);
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-11">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-11">#</a>
+                </div>
+            <p>Will check whether original object was list
+      @return instanceof List
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public boolean isList() {
+        return internal instanceof List;
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-12">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-12">#</a>
+                </div>
+            <p>Popular function will produce new Collection applying transform function to each element in original collection.
+      @param visitor transform visitor
+      @param  result collection type
+      @return resulted collection
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public &lt;E&gt; $C&lt;E&gt; map(TransformVisitor&lt;T,E&gt; visitor){
         List&lt;E&gt; list = new ArrayList&lt;&gt;();
         each((T f)-&gt;{list.add(visitor.visit(f));});
         return new $C&lt;&gt;(list);
-    }
-
-    public &lt;MEMO&gt; MEMO reduce(MEMO memo, ReducePairVisitor&lt;MEMO,T&gt; visitor){
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-13">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-13">#</a>
+                </div>
+            <p>Reduce boils down a list of values into a single value.
+      MEMO is the initial state of the reduction, and each successive step of it should be returned by visitor.
+      The visitor is passed two arguments:
+      the memo, then the value.
+     
+</p><p>@param memo is the initial state of the reduction
+      @param visitor visitor with memo and element
+      @param  reduction base
+      @return memo value
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public &lt;MEMO&gt; MEMO reduce(MEMO memo, ReducePairVisitor&lt;MEMO,T&gt; visitor){
         $O&lt;MEMO&gt; work = $O.$(memo);
-        each((T t)-&gt;{
-            work.set(visitor.visit(work.get(),t));
-        });
+        each((T t)-&gt;
+            work.set(visitor.visit(work.get(),t))
+        );
 
         return work.get();
-    }
-
-    public T find(Matcher&lt;T&gt; matcher) {
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-14">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-14">#</a>
+                </div>
+            <p>Reduces list in backward order. see reduce method.
+     
+</p><p>@param memo is the initial state of the reduction
+      @param visitor visitor with memo and element
+      @param  reduction base
+      @return memo value
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public &lt;MEMO&gt; MEMO reduceRight(MEMO memo, ReducePairVisitor&lt;MEMO,T&gt; visitor) {
+        $O&lt;MEMO&gt; work = $O.$(memo);
+        eachBack((T t)-&gt; work.set(visitor.visit(work.get(),t)));
+        return work.get();
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-15">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-15">#</a>
+                </div>
+            <p>Looks through each value in the list, returning the first one that passes a truth test visitor.
+      The function returns as soon as it finds an acceptable element, and doesn&apos;t traverse the entire list.
+     
+</p><p>@param matcher test visitor
+      @return found element or null
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public T find(Matcher&lt;T&gt; matcher) {
 
         $O&lt;T&gt; result = new $O&lt;&gt;();
-
+        //Will each with next original, to not call next when found
         each((T t,Next f)-&gt; {
             if (!matcher.match(t)) {
                 f.call();
@@ -130,11 +349,24 @@ import java.util.*;</code></pre>
             }
         });
 
-
+        //return result or null
         return result.get();
-    }
-
-    public $C&lt;T&gt; filter(Matcher&lt;T&gt; matcher) {
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-16">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-16">#</a>
+                </div>
+            <p>Looks through each value in the list, returning an array of all the values that pass a truth test matcher.
+      @param matcher test visitor
+      @return new filtered collection wrapper
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public $C&lt;T&gt; filter(Matcher&lt;T&gt; matcher) {
 
         $C&lt;T&gt; filtered = new $C&lt;&gt;();
 
@@ -145,22 +377,97 @@ import java.util.*;</code></pre>
         });
 
         return filtered;
-    }
-
-    public $C&lt;T&gt; reject(Matcher&lt;T&gt; matcher) {
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-17">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-17">#</a>
+                </div>
+            <p>Opposite of filter method.
+      @param matcher test visitor
+      @return new filtered collection wrapper
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public $C&lt;T&gt; reject(Matcher&lt;T&gt; matcher) {
         return filter((T t)-&gt;!matcher.match(t));
-    }
-
-    public boolean every(Matcher&lt;T&gt; matcher) {
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-18">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-18">#</a>
+                </div>
+            <p>Returns whether all elements of collection matches to matcher functor.
+     
+</p><p>@param matcher test visitor
+      @return all of items matches test visitor functor
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public boolean every(Matcher&lt;T&gt; matcher) {
         return find((T t)-&gt;!matcher.match(t))==null;
-    }
-
-    public boolean some(Matcher&lt;T&gt; matcher) {
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-19">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-19">#</a>
+                </div>
+            <p>Returns true if any of the values in the list pass the iterator truth test.
+      Short-circuits and stops traversing the list if a true element is found.
+     
+</p><p>@param matcher test visitor
+      @return true if any matches
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    public boolean some(Matcher&lt;T&gt; matcher) {
         return find(matcher)!=null;
-    }
-
+    }</code></pre>
+            </td>
+        </tr>
+        <tr id="section-20">
+            <td class="docs">
+                <div class="octowrap">
+                    <a class="octothorpe" href="#section-20">#</a>
+                </div>
+            <p>Array transformation
+      @return array
+     
+</p>
+            </td>
+            <td class="code">
+                <pre class="java"><code>    @SuppressWarnings(&quot;unchecked&quot;)
     public T[] array() {
         return (T[]) internal.toArray();
+    }
+
+    @IncludeInMain
+    public static &lt;E&gt; E find(Collection&lt;E&gt; collection, Matcher&lt;E&gt; matcher) {
+        return new $C&lt;&gt;(collection).find(matcher);
+    }
+
+    @IncludeInMain
+    public static &lt;E&gt; E find(E[] array, Matcher&lt;E&gt; matcher) {
+        return new $C&lt;&gt;(array).find(matcher);
+    }
+
+    @IncludeInMain
+    public static &lt;E&gt; $C&lt;E&gt; filter(E[] array, Matcher&lt;E&gt; matcher) {
+        return new $C&lt;&gt;(array).filter(matcher);
+    }
+
+    @IncludeInMain
+    public static &lt;E&gt; $C&lt;E&gt; filter(Collection&lt;E&gt; collection, Matcher&lt;E&gt; matcher) {
+        return new $C&lt;&gt;(collection).filter(matcher);
     }
 
     @IncludeInMain
@@ -205,6 +512,11 @@ import java.util.*;</code></pre>
 
     @IncludeInMain
     public static &lt;K,MEMO&gt; MEMO reduce(K[] it, MEMO memo, ReducePairVisitor&lt;MEMO,K&gt; visitor) {
+        return $(it).reduce(memo,visitor);
+    }
+
+    @IncludeInMain
+    public static &lt;K,MEMO&gt; MEMO reduceRight(K[] it, MEMO memo, ReducePairVisitor&lt;MEMO,K&gt; visitor) {
         return $(it).reduce(memo,visitor);
     }
 

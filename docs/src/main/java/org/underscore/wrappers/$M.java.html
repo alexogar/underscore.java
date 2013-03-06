@@ -41,10 +41,7 @@ import org.underscore.functors.TransformPairVisitor;
 import org.underscore.functors.TransformVisitor;
 import org.underscore.processor.IncludeInMain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;</code></pre>
+import java.util.*;</code></pre>
             </td>
         </tr>
         <tr id="section-1">
@@ -59,7 +56,7 @@ import java.util.Map;</code></pre>
 </p>
             </td>
             <td class="code">
-                <pre class="java"><code>public class $M&lt;K, V&gt; {
+                <pre class="java"><code>public class $M&lt;K, V&gt; implements Map&lt;K,V&gt;{
     private final Map&lt;K, V&gt; internal;
 
     public $M() {
@@ -71,14 +68,14 @@ import java.util.Map;</code></pre>
     }
 
     public $M&lt;K, V&gt; each(EachPairVisitor&lt;K, V&gt; visitor) {
-        for (Map.Entry&lt;K, V&gt; entry : internal.entrySet()) {
+        for (Map.Entry&lt;K, V&gt; entry : entrySet()) {
             visitor.visit(entry.getKey(), entry.getValue());
         }
         return this;
     }
 
     public $M&lt;K, V&gt; each(EachVisitor&lt;Map.Entry&lt;K, V&gt;&gt; visitor) {
-        for (Map.Entry&lt;K, V&gt; entry : internal.entrySet()) {
+        for (Map.Entry&lt;K, V&gt; entry : entrySet()) {
             visitor.visit(entry);
         }
         return this;
@@ -101,11 +98,20 @@ import java.util.Map;</code></pre>
     }
 
     public $C&lt;K&gt; keys() {
-        return new $C&lt;&gt;(internal.keySet());
+        return new $C&lt;&gt;(keySet());
     }
 
     public $C&lt;V&gt; values() {
-        return new $C&lt;&gt;(internal.values());
+        return new $C&lt;&gt;(values());
+    }
+
+    public $C&lt;Entry&lt;K,V&gt;&gt; entries() {
+        return new $C&lt;&gt;(entrySet());
+    }
+
+    @Override
+    public Set&lt;Entry&lt;K,V&gt;&gt; entrySet() {
+        return internal.entrySet();
     }
 
     @IncludeInMain
@@ -131,6 +137,54 @@ import java.util.Map;</code></pre>
     @IncludeInMain
     public static &lt;K,F,T&gt; $M&lt;K,T&gt; map(Map&lt;K, F&gt; map, TransformPairVisitor&lt;K,F,T&gt; visitor) {
         return $(map).map(visitor);
+    }
+
+    @Override
+    public int size() {
+        return internal.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return internal.isEmpty();
+    }
+
+    @Override
+    public boolean containsKey(Object key) {
+        return internal.containsKey(key);
+    }
+
+    @Override
+    public boolean containsValue(Object value) {
+        return internal.containsValue(value);
+    }
+
+    @Override
+    public V get(Object key) {
+        return internal.get(key);
+    }
+
+    public V put(K key, V value) {
+        return internal.put(key, value);
+    }
+
+    @Override
+    public V remove(Object key) {
+        return internal.remove(key);
+    }
+
+    public void putAll(Map&lt;? extends K, ? extends V&gt; m) {
+        internal.putAll(m);
+    }
+
+    @Override
+    public void clear() {
+        internal.clear();
+    }
+
+    @Override
+    public Set&lt;K&gt; keySet() {
+        return internal.keySet();
     }
 }</code></pre>
             </td>
