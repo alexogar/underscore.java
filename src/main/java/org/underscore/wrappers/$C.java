@@ -1,5 +1,6 @@
 package org.underscore.wrappers;
 
+import com.sun.corba.se.impl.orb.ParserTable;
 import org.underscore.functors.*;
 import org.underscore.processor.IncludeInMain;
 
@@ -172,7 +173,7 @@ public class $C<T> extends AbstractCollection<T>{
      */
     public <MEMO> MEMO reduceRight(MEMO memo, ReducePairVisitor<MEMO,T> visitor) {
         $O<MEMO> work = $O.$(memo);
-        eachBack((T t)-> work.set(visitor.visit(work.get(),t)));
+        eachBack((T t) -> work.set(visitor.visit(work.get(), t)));
         return work.get();
     }
 
@@ -233,7 +234,15 @@ public class $C<T> extends AbstractCollection<T>{
      * @return all of items matches test visitor functor
      */
     public boolean every(Matcher<T> matcher) {
-        return find((T t)->!matcher.match(t))==null;
+        return isEmpty() || find((T t) -> !matcher.match(t)) == null;
+    }
+
+    /**
+     * Returns true if all of objects in collections are true after Boolean cast
+     * @return true if all of objects true
+     */
+    public boolean every() {
+        return every((T t)->Boolean.valueOf(t.toString()));
     }
 
     /**
@@ -244,18 +253,41 @@ public class $C<T> extends AbstractCollection<T>{
      * @return true if any matches
      */
     public boolean some(Matcher<T> matcher) {
-        return find(matcher)!=null;
+        return isEmpty() || find(matcher)!=null;
     }
 
+    /**
+     * Some of them after cast to Boolean returns true
+     * @return true if some of them true
+     */
+    public boolean some() {
+        return some((T t)->Boolean.valueOf(t.toString()));
+    }
+
+    /**
+     * Joins collection using ',' separator
+     * @return joined string
+     */
     public String join() {
         return join(",");
     }
 
+    /**
+     * Joins collection using passed separator
+     * @param separator to use
+     * @return joined string
+     */
     public String join(String separator) {
         return joinTo(separator,new StringBuilder()).toString();
     }
 
-    public Appendable joinTo(String separator,StringBuilder builder) {
+    /**
+     * Append joined string to passed builder with passed separateor
+     * @param separator
+     * @param builder
+     * @return builder
+     */
+    public StringBuilder joinTo(String separator,StringBuilder builder) {
         try {
             joinTo(separator, (Appendable) builder);
         } catch (IOException impossible) {
@@ -264,6 +296,13 @@ public class $C<T> extends AbstractCollection<T>{
         return builder;
     }
 
+    /**
+     * Join to appendable
+     * @param separator to use
+     * @param appendable {@link Appendable}
+     * @return changed appendable
+     * @throws IOException
+     */
     public Appendable joinTo(String separator,Appendable appendable) throws IOException {
         Iterator<T> it = internal.iterator();
         if (it.hasNext()) {
@@ -274,6 +313,48 @@ public class $C<T> extends AbstractCollection<T>{
             }
         }
         return appendable;
+    }
+
+    public T max() {
+        $O<T> result = new $O<>();
+        each((T entity)->{
+            if (!(entity instanceof Comparable)) {
+                throw new IllegalStateException("Should be comparable to find maximum");
+            }
+
+            if (result.get()==null) {
+                result.set(entity);
+            } else {
+                Comparable<T> c = (Comparable<T>) entity;
+
+                if (c.compareTo(result.get())>0) {
+                    result.set(entity);
+                }
+            }
+        });
+
+        return result.get();
+    }
+
+    public T min() {
+        $O<T> result = new $O<>();
+        each((T entity)->{
+            if (!(entity instanceof Comparable)) {
+                throw new IllegalStateException("Should be comparable to find maximum");
+            }
+
+            if (result.get()==null) {
+                result.set(entity);
+            } else {
+                Comparable<T> c = (Comparable<T>) entity;
+
+                if (c.compareTo(result.get())<0) {
+                    result.set(entity);
+                }
+            }
+        });
+
+        return result.get();
     }
 
     /**
@@ -343,6 +424,56 @@ public class $C<T> extends AbstractCollection<T>{
     @IncludeInMain
     public static <E> $C<E> filter(Collection<E> collection, Matcher<E> matcher) {
         return new $C<>(collection).filter(matcher);
+    }
+
+    @IncludeInMain
+    public static <E> $C<E> reject(E[] array, Matcher<E> matcher) {
+        return new $C<>(array).reject(matcher);
+    }
+
+    @IncludeInMain
+    public static <E> $C<E> reject(Collection<E> collection, Matcher<E> matcher) {
+        return new $C<>(collection).reject(matcher);
+    }
+
+    @IncludeInMain
+    public static <E> boolean every(E[] array, Matcher<E> matcher) {
+        return new $C<>(array).every(matcher);
+    }
+
+    @IncludeInMain
+    public static <E> boolean every(Collection<E> collection, Matcher<E> matcher) {
+        return new $C<>(collection).every(matcher);
+    }
+
+    @IncludeInMain
+    public static <E> boolean every(E[] array) {
+        return new $C<>(array).every();
+    }
+
+    @IncludeInMain
+    public static <E> boolean every(Collection<E> collection) {
+        return new $C<>(collection).every();
+    }
+
+    @IncludeInMain
+    public static <E> boolean some(E[] array, Matcher<E> matcher) {
+        return new $C<>(array).some(matcher);
+    }
+
+    @IncludeInMain
+    public static <E> boolean some(Collection<E> collection, Matcher<E> matcher) {
+        return new $C<>(collection).some(matcher);
+    }
+
+    @IncludeInMain
+    public static <E> boolean some(E[] array) {
+        return new $C<>(array).some();
+    }
+
+    @IncludeInMain
+    public static <E> boolean some(Collection<E> collection) {
+        return new $C<>(collection).some();
     }
 
     @IncludeInMain
