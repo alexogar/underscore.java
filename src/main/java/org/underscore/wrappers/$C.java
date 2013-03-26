@@ -24,7 +24,7 @@ public class $C<T> extends AbstractCollection<T>{
      * Constructor with array, will initialize internal ArrayList with array base.
      * @param arr Array input parameter
      */
-    public $C(T[] arr) {
+    public $C(T ... arr) {
         if (arr == null) {
             internal = new ArrayList<>();
             return;
@@ -288,7 +288,7 @@ public class $C<T> extends AbstractCollection<T>{
     }
 
     @IncludeInMain
-    public static <E> $C<E> $(E[] it) {
+    public static <E> $C<E> $(E ... it) {
         return new $C<>(it);
     }
 
