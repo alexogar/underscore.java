@@ -31,10 +31,14 @@ public class ArrayTest {
     public void testFirstN() {
 
         assertArrayEquals($A("1").array(),
-                $A("1", "2", "3").first(1));
+                $A("1", "2", "3")
+                        .first(1)
+                        .array());
 
         assertArrayEquals($A("1", "2").array(),
-                $A("1", "2", "3").first(2));
+                $A("1", "2", "3")
+                        .first(2)
+                        .array());
 
         exception.expect(IllegalArgumentException.class);
         $A("1").first(2);
@@ -46,12 +50,12 @@ public class ArrayTest {
 
         assertArrayEquals(
               $A("1", "2").array(),
-              $.first(Arrays.asList("1", "2", "3"), 2)
+              $.first(Arrays.asList("1", "2", "3"), 2).array()
         );
 
         assertArrayEquals(
                 $A("1", "2").array(),
-                $.first(new String[]{"1", "2", "3"}, 2)
+                $.first(new String[]{"1", "2", "3"}, 2).array()
         );
 
     }

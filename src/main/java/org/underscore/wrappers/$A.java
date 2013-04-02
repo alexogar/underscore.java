@@ -70,12 +70,12 @@ public class $A<T> {
      * @param n amount of elements to return
      * @return first elements
      */
-    public T[] first(int n) {
+    public $A<T> first(int n) {
         if (n > internal.length || n <= 0) {
             throw new IllegalArgumentException("Invalid input parameter [" + n +
                     "] for an array of size [" + internal.length + "]");
         }
-        return Arrays.copyOfRange(internal, 0, n);
+        return $A(Arrays.copyOfRange(internal, 0, n));
     }
 
     /**
@@ -96,7 +96,7 @@ public class $A<T> {
      * @return first elements
      */
     @IncludeInMain
-    public static <T> T[] first(T[] array, int n) {
+    public static <T> $A<T> first(T[] array, int n) {
         return $A(array).first(n);
     }
 
@@ -109,7 +109,7 @@ public class $A<T> {
      * @return first elements
      */
     @IncludeInMain
-    public static <T> T[] first(Collection<T> collection, int n) {
+    public static <T> $A<T> first(Collection<T> collection, int n) {
         return $A(collection).first(n);
     }
 
