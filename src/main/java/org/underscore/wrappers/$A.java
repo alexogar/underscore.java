@@ -3,10 +3,9 @@ package org.underscore.wrappers;
 import org.underscore.$;
 import org.underscore.processor.IncludeInMain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+
+import static org.underscore.$.$;
 
 /**
  * Array wrapper and related Utility functions holder
@@ -52,6 +51,40 @@ public class $A<T> {
             }
         });
         return (T[]) result.toArray();
+    }
+
+    /**
+     * Computes the intersection of all input arrays with internal array.
+     *
+     * @param arrays input arrays to intersect
+     * @return intersectionWith result
+     */
+    public $A<T> intersectionWith($A<T>... arrays) {
+        if (arrays == null || arrays.length == 0) {
+            return new $A();
+        }
+        T[][] arrayOfArrays = (T[][]) new Object[arrays.length][];
+        for (int i = 0; i < arrays.length; i++) {
+            arrayOfArrays[i] = arrays[i].array();
+        }
+        return intersectionWith(arrayOfArrays);
+    }
+
+    /**
+     * Computes the intersection of all input arrays with internal array.
+     *
+     * @param arrays input arrays to intersect
+     * @return intersectionWith result
+     */
+    public $A<T> intersectionWith(T[]... arrays) {
+        if (arrays == null || arrays.length == 0) {
+            return new $A();
+        }
+        final Set<T> internalSet = new LinkedHashSet<>(Arrays.asList(array()));
+        $(arrays).each(array -> {
+            internalSet.retainAll($.$(array).list());
+        });
+        return $A((T[]) internalSet.toArray());
     }
 
     /**
@@ -111,6 +144,24 @@ public class $A<T> {
     @IncludeInMain
     public static <T> $A<T> first(Collection<T> collection, int n) {
         return $A(collection).first(n);
+    }
+
+    /**
+     * Returns intersection of input arrays.
+     *
+     * @param arrays input arrays
+     * @param <T>
+     * @return intersection
+     */
+    @IncludeInMain
+    public static <T> $A<T> intersection($A<T> ... arrays) {
+        if (arrays == null || arrays.length == 0) {
+            return new $A();
+        }
+        if (arrays.length == 1) {
+            return arrays[0];
+        }
+        return arrays[0].intersectionWith(Arrays.copyOfRange(arrays, 1, arrays.length - 1));
     }
 
     @IncludeInMain

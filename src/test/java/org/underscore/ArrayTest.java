@@ -8,7 +8,8 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.underscore.$.*;
+import static org.underscore.$.$;
+import static org.underscore.$.$A;
 
 public class ArrayTest {
 
@@ -47,33 +48,26 @@ public class ArrayTest {
 
     @Test
     public void testFirstNUsingStatic() {
-
         assertArrayEquals(
-              $A("1", "2").array(),
-              $.first(Arrays.asList("1", "2", "3"), 2).array()
+                $A("1", "2").array(),
+                $.first(Arrays.asList("1", "2", "3"), 2).array()
         );
-
         assertArrayEquals(
                 $A("1", "2").array(),
                 $.first(new String[]{"1", "2", "3"}, 2).array()
         );
-
     }
 
     @Test
     public void testFirstNFailsWithZero() {
-
         exception.expect(IllegalArgumentException.class);
         $A("1").first(0);
-
     }
 
     @Test
     public void testFirstNFailsWithNegative() {
-
         exception.expect(IllegalArgumentException.class);
         $A("1").first(-1);
-
     }
 
     @Test
@@ -109,6 +103,59 @@ public class ArrayTest {
                 $A(new String[]{"1"}, "2", new String[]{"3"}).flatten(),
                 new String[]{"1", "2", "3"});
 
+    }
+
+    @Test
+    public void testIntersectionUsingWrappers() {
+
+        assertArrayEquals(
+                $A(1, 2).array(),
+                $A(1, 2, 3, 4, 5)
+                        .intersectionWith($A(8, 7, 2, 1), $A(6, 5, 2, 1, 4))
+                        .array()
+        );
+
+        // chained
+        assertArrayEquals(
+                $A(1, 2).array(),
+                $A(1, 2, 3, 4, 5)
+                        .intersectionWith($A(8, 7, 2, 1), $A(6, 5, 2, 1, 4))
+                        .intersectionWith($A(5, 6, 2, 1))
+                        .array()
+        );
+
+    }
+
+    @Test
+    public void testIntersectionUsingArrays() {
+
+        assertArrayEquals(
+                $A(1, 2).array(),
+                $A(1, 2, 3, 4, 5)
+                        .intersectionWith(new Integer[]{8, 7, 2, 1}, new Integer[]{6, 5, 2, 1, 4})
+                        .array()
+        );
+
+        assertArrayEquals(
+                $A(1, 2).array(),
+                $A(1, 2, 3, 4, 5)
+                        .intersectionWith(new Integer[]{8, 7, 2, 1}, new Integer[]{6, 5, 2, 1, 4})
+                        .intersectionWith(new Integer[]{5, 6, 2, 1})
+                        .array()
+        );
+
+    }
+
+    @Test
+    public void testIntersectionWithStaticCall() {
+        assertArrayEquals(
+                $A(1, 2).array(),
+                $.intersection(
+                        $A(1, 2, 3, 4, 5),
+                        $A(3, 1, 2, 4, 5),
+                        $A(6, 7, 8, 1, 2))
+                        .array()
+        );
     }
 
 
