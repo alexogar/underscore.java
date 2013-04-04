@@ -148,6 +148,7 @@ public class ArrayTest {
 
     @Test
     public void testIntersectionWithStaticCall() {
+
         assertArrayEquals(
                 $A(1, 2).array(),
                 $.intersection(
@@ -156,7 +157,17 @@ public class ArrayTest {
                         $A(6, 7, 8, 1, 2))
                         .array()
         );
+
+        assertArrayEquals(
+                new Integer[]{},
+                $.intersection(
+                        $A(1, 2, 3),
+                        $A(3, 1, 2, 4, 5),
+                        $A(6, 7, 8))
+                        .array()
+        );
     }
+
 
 
 }
