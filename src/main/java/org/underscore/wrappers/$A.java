@@ -44,7 +44,7 @@ public class $A<T> {
         List<T> result = new ArrayList<>();
         $.each(this.internal, (T o) -> {
             if (o.getClass().isArray()) {
-                List<T> nested = Arrays.asList($A((T[]) o).flatten());
+                List<T> nested = $($A((T[]) o).flatten()).list();
                 result.addAll(nested);
             } else {
                 result.add(o);
@@ -61,7 +61,7 @@ public class $A<T> {
      */
     public $A<T> intersectionWith($A<T>... arrays) {
         if (arrays == null || arrays.length == 0) {
-            return new $A();
+            return $A();
         }
         T[][] arrayOfArrays = (T[][]) new Object[arrays.length][];
         for (int i = 0; i < arrays.length; i++) {
@@ -78,11 +78,11 @@ public class $A<T> {
      */
     public $A<T> intersectionWith(T[]... arrays) {
         if (arrays == null || arrays.length == 0) {
-            return new $A();
+            return $A();
         }
-        final Set<T> internalSet = new LinkedHashSet<>(Arrays.asList(array()));
+        final Set<T> internalSet = new LinkedHashSet<>($(array()).list());
         $(arrays).each(array -> {
-            internalSet.retainAll($.$(array).list());
+            internalSet.retainAll($(array).list());
         });
         return $A((T[]) internalSet.toArray());
     }
