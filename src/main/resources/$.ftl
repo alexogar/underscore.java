@@ -5,6 +5,7 @@ import org.underscore.wrappers.$C;
 import org.underscore.wrappers.$M;
 import org.underscore.wrappers.$O;
 import org.underscore.wrappers.$T;
+import org.underscore.wrappers.$A;
 
 import org.underscore.processor.IncludeInMain;
 import javax.annotation.Generated;
