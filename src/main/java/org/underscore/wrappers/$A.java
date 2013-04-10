@@ -70,6 +70,13 @@ public class $A<T> {
         return intersectionWith(arrayOfArrays);
     }
 
+    public List<T> list() {
+        if (this.internal == null) {
+            return null;
+        }
+        return Arrays.asList(this.internal);
+    }
+
     /**
      * Computes the intersection of all input arrays with internal array.
      *
@@ -98,16 +105,43 @@ public class $A<T> {
     }
 
     /**
-     * Returns first 'n' elements of the array.
+     * Returns last element, or throws an exception if size of array is less than 1.
+     *
+     * @return last element
+     * @throws ArrayIndexOutOfBoundsException if size of array is less that 1
+     */
+    public T last() {
+        return internal[internal.length - 1];
+    }
+
+    /**
+     * Returns last 'N' elements of the array, or throws an exception if size of array is less than 'N' or <= 0.
+     *
+     * @param n amount of elements to return
+     * @return last 'N' elements
+     */
+    public $A<T> last(int n) {
+        checkRangeIsValid(n);
+        int length = internal.length;
+        return $A(Arrays.copyOfRange(internal, length - n, length));
+    }
+
+    private void checkRangeIsValid(int n) {
+        if (n > internal.length || n <= 0) {
+            throw new IllegalArgumentException("Invalid range [" + n +
+                    "] for an array of size [" + internal.length + "]");
+        }
+    }
+
+    /**
+     * Returns first 'N' elements of the array.
      *
      * @param n amount of elements to return
      * @return first elements
+     * @throws IllegalArgumentException if 'N' > size of array or 'N' <= 0
      */
     public $A<T> first(int n) {
-        if (n > internal.length || n <= 0) {
-            throw new IllegalArgumentException("Invalid input parameter [" + n +
-                    "] for an array of size [" + internal.length + "]");
-        }
+        checkRangeIsValid(n);
         return $A(Arrays.copyOfRange(internal, 0, n));
     }
 
@@ -134,6 +168,19 @@ public class $A<T> {
     }
 
     /**
+     * Returns last 'n' elements of the array
+     *
+     * @param array original array
+     * @param n     amount of last elements
+     * @param <T>   elements type
+     * @return last elements
+     */
+    @IncludeInMain
+    public static <T> $A<T> last(T[] array, int n) {
+        return $A(array).last(n);
+    }
+
+    /**
      * Returns first 'n' elements of the collection. Order is managed by collection's iterator.
      *
      * @param collection original collection
@@ -154,7 +201,7 @@ public class $A<T> {
      * @return intersection
      */
     @IncludeInMain
-    public static <T> $A<T> intersection($A<T> ... arrays) {
+    public static <T> $A<T> intersection($A<T>... arrays) {
         if (arrays == null || arrays.length == 0) {
             return new $A();
         }

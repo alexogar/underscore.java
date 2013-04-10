@@ -29,6 +29,46 @@ public class ArrayTest {
     }
 
     @Test
+    public void testLastN() {
+
+        assertArrayEquals(
+                $A("1", "2", "3").array(),
+                $A("0", "1", "2", "3")
+                        .last(3)
+                        .array()
+        );
+
+        assertArrayEquals(
+                $A("1", "2", "3").array(),
+                $.last($A("0", "1", "2", "3").array(), 3).array()
+        );
+
+    }
+
+    @Test
+    public void testLast() {
+        assertEquals($A("1", "2", "3").last(), "3");
+    }
+
+    @Test
+    public void testLastNFailsWithNegative() {
+        exception.expect(IllegalArgumentException.class);
+        $A("1").last(-1);
+    }
+
+    @Test
+    public void testLastNFailsWithOutOfBounds() {
+        exception.expect(IllegalArgumentException.class);
+        $A("1").last(4);
+    }
+
+    @Test
+    public void testLastNFailsWithZero() {
+        exception.expect(IllegalArgumentException.class);
+        $A("1").last(0);
+    }
+
+    @Test
     public void testFirstN() {
 
         assertArrayEquals($A("1").array(),
