@@ -206,6 +206,21 @@ public class ArrayTest {
                         $A(6, 7, 8))
                         .array()
         );
+
+        // intersection of plain arrays
+        assertArrayEquals(
+                $A(1, 2).array(),
+                $.intersection(
+                        $A(1, 2, 3, 4, 5).array(),
+                        $A(3, 1, 2, 4, 5).array(),
+                        $A(6, 7, 8, 1, 2).array())
+                        .array()
+        );
+    }
+
+    @Test
+    public void testUnionUsingWrappers() {
+
     }
 
 
