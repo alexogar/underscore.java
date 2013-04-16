@@ -3,6 +3,7 @@ package org.underscore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.underscore.wrappers.$A;
 
 import java.util.Arrays;
 
@@ -26,6 +27,46 @@ public class ArrayTest {
         exception.expect(IndexOutOfBoundsException.class);
         $A().first();
 
+    }
+
+    @Test
+    public void testLastN() {
+
+        assertArrayEquals(
+                $A("1", "2", "3").array(),
+                $A("0", "1", "2", "3")
+                        .last(3)
+                        .array()
+        );
+
+        assertArrayEquals(
+                $A("1", "2", "3").array(),
+                $.last($A("0", "1", "2", "3").array(), 3).array()
+        );
+
+    }
+
+    @Test
+    public void testLast() {
+        assertEquals($A("1", "2", "3").last(), "3");
+    }
+
+    @Test
+    public void testLastNFailsWithNegative() {
+        exception.expect(IllegalArgumentException.class);
+        $A("1").last(-1);
+    }
+
+    @Test
+    public void testLastNFailsWithOutOfBounds() {
+        exception.expect(IllegalArgumentException.class);
+        $A("1").last(4);
+    }
+
+    @Test
+    public void testLastNFailsWithZero() {
+        exception.expect(IllegalArgumentException.class);
+        $A("1").last(0);
     }
 
     @Test
@@ -166,8 +207,57 @@ public class ArrayTest {
                         $A(6, 7, 8))
                         .array()
         );
+
+        // intersection of plain arrays
+        assertArrayEquals(
+                $A(1, 2).array(),
+                $.intersection(
+                        $A(1, 2, 3, 4, 5).array(),
+                        $A(3, 1, 2, 4, 5).array(),
+                        $A(6, 7, 8, 1, 2).array())
+                        .array()
+        );
     }
 
+    @Test
+    public void testUnionUsingWrappers() {
+
+        assertArrayEquals($A(1, 2, 3, 4).array(),
+                $.union($A(1, 2), $A(2, 3), $A(3, 4)).array());
+
+        assertArrayEquals($A(1, 2, 3, 4).array(),
+                $.union(
+                        $A(1, 2).array(),
+                        $A(2, 3).array(),
+                        $A(3, 4).array())
+                        .array());
+
+    }
+
+    @Test
+    public void testUnion() {
+
+        assertArrayEquals($A(1, 2, 3, 4).array(),
+                $A(1, 2).unionWith($A(2, 3), $A(3, 4)).array());
+
+        assertArrayEquals($A(1, 2, 3, 4).array(),
+                $A(1, 2).unionWith(
+                        $A(2, 3).array(),
+                        $A(3, 4).array())
+                        .array());
+
+    }
+
+    @Test
+    public void testUnionWithEmpty() {
+
+        $A<Integer> wrapper = $A(1, 2, 3);
+
+        assertArrayEquals(
+                wrapper.unionWith(new Integer[]{}).array(),
+                wrapper.array());
+
+    }
 
 
 }
