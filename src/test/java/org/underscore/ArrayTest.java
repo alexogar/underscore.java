@@ -3,6 +3,7 @@ package org.underscore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.underscore.wrappers.$A;
 
 import java.util.Arrays;
 
@@ -221,8 +222,42 @@ public class ArrayTest {
     @Test
     public void testUnionUsingWrappers() {
 
+        assertArrayEquals($A(1, 2, 3, 4).array(),
+                $.union($A(1, 2), $A(2, 3), $A(3, 4)).array());
+
+        assertArrayEquals($A(1, 2, 3, 4).array(),
+                $.union(
+                        $A(1, 2).array(),
+                        $A(2, 3).array(),
+                        $A(3, 4).array())
+                        .array());
+
     }
 
+    @Test
+    public void testUnion() {
+
+        assertArrayEquals($A(1, 2, 3, 4).array(),
+                $A(1, 2).unionWith($A(2, 3), $A(3, 4)).array());
+
+        assertArrayEquals($A(1, 2, 3, 4).array(),
+                $A(1, 2).unionWith(
+                        $A(2, 3).array(),
+                        $A(3, 4).array())
+                        .array());
+
+    }
+
+    @Test
+    public void testUnionWithEmpty() {
+
+        $A<Integer> wrapper = $A(1, 2, 3);
+
+        assertArrayEquals(
+                wrapper.unionWith(new Integer[]{}).array(),
+                wrapper.array());
+
+    }
 
 
 }

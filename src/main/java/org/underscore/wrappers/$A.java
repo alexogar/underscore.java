@@ -102,13 +102,25 @@ public class $A<T> {
      * @param arrays
      * @return
      */
-    public $A<T> unionWith(T[]... arrays) {
+    public $A<T> unionWith($A<T>... arrays) {
         if (isEmpty(arrays)) return this;
         final Set<T> internalSet = new LinkedHashSet<>(list());
         $(arrays).each(array -> {
-            internalSet.addAll($A(array).list());
+            internalSet.addAll(array.list());
         });
         return $A((T[]) internalSet.toArray());
+    }
+
+    /**
+     * Computes the union of all input arrays with internal array.
+     *
+     * @param arrays
+     * @return
+     */
+    public $A<T> unionWith(T[]... arrays) {
+        if (isEmpty(arrays)) return this;
+        $A[] wrappers = toWrappers(arrays);
+        return unionWith(wrappers);
     }
 
     /**
